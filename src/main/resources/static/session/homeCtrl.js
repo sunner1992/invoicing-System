@@ -9,7 +9,20 @@ define(function (require) {
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
 		$css.add('session/home.css');
-
+		
+		$scope.modules = [{
+				name: '系统管理'
+			},
+			{
+				name: '采购管理'
+			},
+			{
+				name: '销售管理'
+			},
+			{
+				name: '统计分析'
+			}
+		]
     }]);
 
 });

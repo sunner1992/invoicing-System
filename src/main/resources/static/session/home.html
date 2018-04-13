@@ -56,11 +56,7 @@
         <div class="nav-left">
             <div class="menu-container">
                 <ul class="menu">
-                    <li><a href="#">Cras justo odio</a></li>
-                    <li><a href="#">Dapibus ac facilisis in</a></li>
-                    <li><a href="#">Morbi leo risus</a></li>
-                    <li><a href="#">Porta ac consectetur ac</a></li>
-                    <li><a href="#">Vestibulum at eros</a></li>
+                    <li data-ng-repeat="module in modules"><a href="#">{{module.name}}</a></li>
                 </ul>
             </div>
             <div>
