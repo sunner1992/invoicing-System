@@ -16,8 +16,7 @@
     bottom: 0;
 }
 .fixedThead{
-	display: block;  
-    width: 100%;
+	display: flex;  
     background-color: rgb(255, 255, 255); 
 }
 /*.fixedThead th{
@@ -33,7 +32,8 @@
     background: -webkit-gradient(linear, left top, left bottom, from(#F9F9F9), to(#E6E6E6));
 }*/
 .scrollTbody{
-	display: block;
+    display: flex;
+    flex-direction: column;
     overflow: auto;
     width: 100%;
     position: absolute;
