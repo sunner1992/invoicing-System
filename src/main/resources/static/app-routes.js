@@ -2,7 +2,7 @@ define(function (require) {
     var app = require('./app');
 
     app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/home/systemManager/role');
+        $urlRouterProvider.otherwise('/home/systemManage/role');
 
         $stateProvider
             .state('home', {
@@ -12,35 +12,35 @@ define(function (require) {
                 controllerUrl: 'session/homeCtrl',
                 controller: 'homeCtrl'
             })
-            .state('home.systemManager', {
-                url: '/systemManager',
-                templateUrl: 'session/systemManager.html',
+            .state('home.systemManage', {
+                url: '/systemManage',
+                templateUrl: 'session/systemManage.html',
                 // new attribute for ajax load controller
-                controllerUrl: 'session/systemManager',
-                controller: 'systemManagerController',
+                controllerUrl: 'session/systemManage',
+                controller: 'systemManageController',
                 // support to load more controllers, services, filters, ...
 //                dependencies: ['services/usersService']
             })
-            .state('home.systemManager.role', {
+            .state('home.systemManage.role', {
                 url: '/role',
                 templateUrl: 'session/role.html',
                 // new attribute for ajax load controller
                 controllerUrl: 'session/role',
                 controller: 'roleController'
             })
-            .state('home.systemManager.user', {
+            .state('home.systemManage.user', {
                 url: '/user',
                 templateUrl: 'session/user.html',
                 // new attribute for ajax load controller
                 controllerUrl: 'session/user',
                 controller: 'userController'
             })
-            .state('home.systemManager.record', {
+            .state('home.systemManage.record', {
                 url: '/record',
-                templateUrl: 'session/record.html',
+                templateUrl: 'session/systemRecord.html',
                 // new attribute for ajax load controller
-                controllerUrl: 'session/record',
-                controller: 'rrecordController'
+                controllerUrl: 'session/systemRecord',
+                controller: 'systemRecordController'
             })
     }]);
 });

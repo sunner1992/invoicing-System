@@ -4,11 +4,11 @@ define(function (require) {
     // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');
 
-    app.controller('roleController', ['$scope', '$ngConfirm', '$css', '$uibModal', function ($scope, $ngConfirm, $css, $uibModal) {
+    app.controller('systemRecordController', ['$scope', '$ngConfirm', '$css', '$uibModal', function ($scope, $ngConfirm, $css, $uibModal) {
         // shortcut to get angular injected service.
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
-		$css.add('session/role.css');
+		$css.add('session/systemRecord.css');
 		
 		$scope.roles = [];
 
@@ -22,8 +22,8 @@ define(function (require) {
 		      // animation: $ctrl.animationsEnabled,
 		      // ariaLabelledBy: 'modal-title',
 		      // ariaDescribedBy: 'modal-body',
-		      templateUrl: 'session/templates/roleModal.html',
-		      controller: 'roleModalController',
+		      templateUrl: 'session/templates/userModal.html',
+		      controller: 'userModalController',
 		      // controllerAs: '$ctrl',
 		      // size: size,
 		      // appendTo: parentElem,
@@ -53,8 +53,8 @@ define(function (require) {
 		      // animation: $ctrl.animationsEnabled,
 		      // ariaLabelledBy: 'modal-title',
 		      // ariaDescribedBy: 'modal-body',
-		      templateUrl: 'session/templates/roleModal.html',
-		      controller: 'roleModalController',
+		      templateUrl: 'session/templates/userModal.html',
+		      controller: 'userModalController',
 		      // controllerAs: '$ctrl',
 		      // size: size,
 		      // appendTo: parentElem,
@@ -75,7 +75,7 @@ define(function (require) {
 		}
 		$scope.init();
 
-    }]).controller('roleModalController',function ($uibModalInstance, $scope, index, roles) {
+    }]).controller('userModalController',function ($uibModalInstance, $scope, index, roles) {
     	//添加user的Modal控制器
     	$scope.permissions = [{name:'角色管理', value:'systemManage.role'}, {name:'用户管理', value:'systemManage.user'},
     	 {name:'记录管理', value:'systemManage.record'}, {name:'采购商管理', value:'purchaseManage.purchaser'}, 

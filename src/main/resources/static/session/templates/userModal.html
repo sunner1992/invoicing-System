@@ -1,20 +1,32 @@
 <div class="my-modal" style="padding: 50px">
 	<div class="my-modal-header">
-		<h1>添加角色</h1>
+		<h1>添加用户</h1>
 	</div>
 	<div class="my-modal-content">
 		<div class="form-group">
-		    <label for="roleName">角色名</label>
-		    <input type="text" class="form-control" id="roleName" data-ng-model="role.name">
+		    <label for="roleName">用户名</label>
+		    <input type="text" class="form-control" id="roleName" data-ng-model="user.name">
+	    </div>
+	    <div class="form-group">
+		    <label class="radio-inline">
+			  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" data-ng-click="user.gender='男'"> 男
+			</label>
+			<label class="radio-inline">
+			  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" data-ng-click="user.gender='女'"> 女
+			</label>
+	    </div>
+	    <div class="form-group">
+		    <label class="radio-inline" data-ng-repeat="role in roles">
+			  <input type="radio" name="rolesOptions" id="roleRadio1" value="option1" data-ng-click="user.role=role.name"> {{role.name}}
+			</label>
 	    </div>
 		<div class="form-group">
-		    <label>权限列表</label>
-		    <table style="margin-left: 20px">
-		    	<tr data-ng-repeat="p in permissions">
-		    		<td style="width: 20px"><a href="javascript:void(0)" data-ng-click="selectPermission(p)"><i class="fa" data-ng-class="{true:'fa-check-square-o', false:'fa-square-o'}[!!p.checked]"></i></a></td>
-		    		<td>{{p.name}}</td>
-		    	</tr>
-		    </table>
+		    <label for="phoneNum">电话</label>
+		    <input type="text" class="form-control" id="phoneNum" data-ng-model="user.phoneNum">
+		</div>
+		<div class="form-group">
+		    <label for="address">地址</label>
+		    <input type="text" class="form-control" id="address" data-ng-model="user.address">
 		</div>
 	</div>
 	<div class="my-modal-footer" style="display: flex; justify-content: flex-end;">

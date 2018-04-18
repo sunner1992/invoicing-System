@@ -1,30 +1,36 @@
-<div class="system-user">
-	<table class="table table-bordered table-hover">
- 		<div>
- 			<thead>
- 				<th>表头</th>
- 				<th>表头</th>
- 				<th>表头</th>
- 				<th>表头</th>
- 				<th>表头</th>
- 				<th>表头</th>
- 				<th>表头</th>
- 				<th>表头</th>
- 			</thead>
- 		</div>
- 		<div>
- 			<tbody>
- 				<tr>
- 					<td>表身</td>
- 					<td>表身</td>
- 					<td>表身</td>
- 					<td>表身</td>
- 					<td>表身</td>
- 					<td>表身</td>
- 					<td>表身</td>
- 					<td>表身</td>
- 				</tr>
- 			</tbody>
- 		</div>
-	</table>
+<div class="system-role">
+	<div class="table-ctrl">
+		<button type="button" class="btn btn-info" ng-click="openAddModal()">增加(用户界面)</button>
+      	<button type="button" class="btn btn-info" ng-click="save()">保存</button>
+	</div>
+	<div class="table-content">
+		<!-- <div style="position: relative;width: 100%;height: 100%;"> -->
+			<table class="table table-bordered table-hover" style="display: flex;width: 100%;flex-direction: column;max-height: 90%;">
+	 			<thead class="fixedThead" style="width: 100%;height: 40px;">
+	 				<tr style="display: flex;flex-grow: 1">
+	 					<th style="min-width: 80px; text-align: center;">名字</th>
+	 					<th style="min-width: 100px;text-align: center;">操作</th>
+	 					<th style="min-width: 60px;text-align: center;">性别</th>
+	 					<th style="min-width: 100px;text-align: center;">角色</th>
+	 					<th style="min-width: 250px;text-align: center;">创建时间</th>
+	 					<th style="min-width: 150px;text-align: center;">电话</th>
+		 				<th style="flex-grow: 1;text-align: center;">地址</th>
+	 				</tr>
+	 			</thead>
+	 			<tbody class="scrollTbody">
+	 				<tr data-ng-repeat="user in users" style="display: flex;min-height: 40px">
+	 					<td style="min-width: 80px;text-align: center;">{{user.name}}</td>
+	 					<td style="min-width: 100px;text-align: center;"><a href="javascript:void(0)" data-ng-click="modify($index)"><span>修改</span></a>   <a href="javascript:void(0)" data-ng-click="delete($index)"><span>删除</span></a></td>
+	 					<td style="min-width: 60px;text-align: center;">{{user.gender}}</td>
+	 					<td style="min-width: 100px;text-align: center;">{{user.role}}</td>
+	 					<td style="min-width: 250px;text-align: center;">{{user.createTime}}</td>
+	 					<td style="min-width: 150px;text-align: center;">{{user.phoneNum}}</td>
+	 					<td style="flex-grow: 1;text-align: center;">{{user.address}}</td>
+	 				</tr>
+	 			</tbody>
+			</table>
+			<div class="table-footer">
+				<ul uib-pagination boundary-links="true" total-items="users" ng-model="currentPage" class="pagination-sm" previous-text="上一页" next-text="下一页;" first-text="首页" last-text="尾页"></ul>
+			</div>
+	</div>
 </div>
