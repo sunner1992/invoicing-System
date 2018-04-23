@@ -85,7 +85,8 @@ define(function (require) {
     	 {name:'销售记录', value:'saleMagage.record'}, {name:'采购分析', value:'statisticManage.purchase'}, {name:'销售分析', value:'statisticManage.sale'},
     	 {name:'盈利分析', value:'statisticManage.profit'}, {name:'库存分析', value:'statisticManage.storage'}]
     	$scope.role = {
-    		name: '',
+    		id:'',
+			name: '',
     		createTime: null,//实际添加时赋值
     		permissions: ''
     	};
