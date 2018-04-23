@@ -1,0 +1,39 @@
+<div class="my-modal" style="padding: 50px">
+	<div class="my-modal-header">
+		<h1>商品添加</h1>
+	</div>
+	<div class="my-modal-content">
+		<div class="form-group">
+		    <label for="roleName">商品ID</label>
+		    <input type="text" class="form-control" data-ng-model="good.id">
+	    </div>
+	</div>
+	<div class="my-modal-content">
+		<div class="form-group">
+		    <label for="roleName">商品名称</label>
+		    <input type="text" class="form-control" data-ng-model="good.name">
+	    </div>
+	</div>
+	<div class="my-modal-content">
+		<div class="form-group">
+		    <label for="roleName">商品类别</label>
+		    <input type="text" class="form-control" data-ng-model="good.category">
+	    </div>
+	</div>
+	<div class="my-modal-content">
+		<div class="form-group">
+		    <label for="roleName">生产厂商</label>
+		    <input type="text" class="form-control" data-ng-model="good.creater">
+	    </div>
+	</div>
+	<div class="my-modal-content">
+		<div class="form-group">
+		    <label for="roleName">供应商</label>
+		    <input type="text" class="form-control" data-ng-model="good.provider">
+	    </div>
+	</div>
+	<div class="my-modal-footer" style="display: flex; justify-content: flex-end;">
+		<button type="button" class="btn btn-info" data-ng-click="add()" style="margin-left: 20px">添加</button>
+      	<button type="button" class="btn btn-info" data-ng-click="cancel()" style="margin-left: 20px">取消</button>
+	</div>
+</div>

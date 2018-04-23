@@ -78,7 +78,7 @@ define(function (require) {
     }]).controller('roleModalController',function ($uibModalInstance, $scope, index, roles) {
     	//添加user的Modal控制器
     	$scope.permissions = [{name:'角色管理', value:'systemManage.role'}, {name:'用户管理', value:'systemManage.user'},
-    	 {name:'记录管理', value:'systemManage.record'}, {name:'采购商管理', value:'purchaseManage.purchaser'}, 
+    	 {name:'记录管理', value:'systemManage.record'}, {name:'供应商管理', value:'purchaseManage.provider'}, 
     	 {name:'采购商品管理', value:'purchaseManage.goods'}, {name:'商品类别管理', value:'purchaseManage.actegory'}, 
     	 {name:'退货管理', value:'purchaseManage.back'}, {name:'采购记录管理', value:'purchaseManage.record'}, 
     	 {name:'销售管理', value:'saleMagage.goods'}, {name:'退货管理', value:'saleMagage.back'}, {name:'库存管理', value:'saleMagage.storage'},

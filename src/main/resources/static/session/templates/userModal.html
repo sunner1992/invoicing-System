@@ -9,15 +9,15 @@
 	    </div>
 	    <div class="form-group">
 		    <label class="radio-inline">
-			  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" data-ng-click="user.gender='男'"> 男
+			  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="男" data-ng-click="user.gender='男'" data-ng-model="user.gender"> 男
 			</label>
 			<label class="radio-inline">
-			  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" data-ng-click="user.gender='女'"> 女
+			  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="女" data-ng-click="user.gender='女'" data-ng-model="user.gender"> 女
 			</label>
 	    </div>
 	    <div class="form-group">
 		    <label class="radio-inline" data-ng-repeat="role in roles">
-			  <input type="radio" name="rolesOptions" id="roleRadio1" value="option1" data-ng-click="user.role=role.name"> {{role.name}}
+			  <input type="radio" name="rolesOptions" id="roleRadio1" value="{{role.name}}" data-ng-click="user.role=role.name" data-ng-model="user.role"> {{role.name}}
 			</label>
 	    </div>
 		<div class="form-group">

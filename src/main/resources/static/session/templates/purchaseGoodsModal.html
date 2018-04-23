@@ -1,0 +1,23 @@
+<div class="my-modal" style="padding: 50px">
+	<div class="my-modal-header">
+		<h1>采购添加</h1>
+	</div>
+	<div class="my-modal-content">
+		<div class="form-group">
+		    <label for="roleName">商品ID</label>
+		    <input type="text" class="form-control" data-ng-model="good.id">
+	    </div>
+		<div class="form-group">
+		    <label for="phoneNum">商品单价</label>
+		    <input type="text" class="form-control" data-ng-model="provider.price">
+		</div>
+		<div class="form-group">
+		    <label for="phoneNum">商品数量</label>
+		    <input type="text" class="form-control" data-ng-model="provider.count">
+		</div>
+	</div>
+	<div class="my-modal-footer" style="display: flex; justify-content: flex-end;">
+		<button type="button" class="btn btn-info" data-ng-click="add()" style="margin-left: 20px">添加</button>
+      	<button type="button" class="btn btn-info" data-ng-click="cancel()" style="margin-left: 20px">取消</button>
+	</div>
+</div>

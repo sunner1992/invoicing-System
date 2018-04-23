@@ -1,0 +1,36 @@
+<div class="system-role">
+	<div class="table-ctrl">
+		<button type="button" class="btn btn-info" data-ng-click="openAddModal()">增加(供应商界面)</button>
+      	<button type="button" class="btn btn-info" data-ng-click="save()">保存</button>
+	</div>
+	<div class="table-content">
+		<!-- <div style="position: relative;width: 100%;height: 100%;"> -->
+			<table class="table table-bordered table-hover" style="display: flex;width: 100%;flex-direction: column;max-height: 90%;">
+	 			<thead class="fixedThead" style="width: 100%;height: 40px;">
+	 				<tr style="display: flex;flex-grow: 1">
+	 					<th style="min-width: 80px; text-align: center;">公司编号</th>
+	 					<th style="min-width: 100px;text-align: center;">操作</th>
+	 					<th style="min-width: 100px;text-align: center;">联系人</th>
+	 					<th style="min-width: 150px;text-align: center;">联系电话</th>
+	 					<th style="min-width: 150px;text-align: center;">公司电话</th>
+	 					<th style="min-width: 250px;text-align: center;">公司名称</th>
+		 				<th style="flex-grow: 1;text-align: center;">公司地址</th>
+	 				</tr>
+	 			</thead>
+	 			<tbody class="scrollTbody">
+	 				<tr data-ng-repeat="provider in providers" style="display: flex;min-height: 40px">
+	 					<td style="min-width: 80px;text-align: center;">{{provider.id}}</td>
+	 					<td style="min-width: 100px;text-align: center;"><a href="javascript:void(0)" data-ng-click="modify($index)"><span>修改</span></a>   <a href="javascript:void(0)" data-ng-click="delete($index)"><span>删除</span></a></td>
+	 					<td style="min-width: 100px;text-align: center;">{{provider.name}}</td>
+	 					<td style="min-width: 150px;text-align: center;">{{provider.phoneNum}}</td>
+	 					<td style="min-width: 150px;text-align: center;">{{provider.companyPhone}}</td>
+	 					<td style="min-width: 250px;text-align: center;">{{provider.company}}</td>
+	 					<td style="flex-grow: 1;text-align: center;">{{provider.address}}</td>
+	 				</tr>
+	 			</tbody>
+			</table>
+			<div class="table-footer">
+				<ul uib-pagination boundary-links="true" total-items="users" ng-model="currentPage" class="pagination-sm" previous-text="上一页" next-text="下一页" first-text="首页" last-text="尾页"></ul>
+			</div>
+	</div>
+</div>

@@ -1,0 +1,17 @@
+<div class="main-nav">
+	<!-- <ul class="nav nav-tabs">
+	  <li data-ng-repeat="page in pages" data-ng-class="{true:'active',false:''}[page==pageCur]"><a href="#" data-ng-click="changePage(page)">{{page}}</a></li>
+	</ul> -->
+	<uib-tabset active="active">
+	    <uib-tab ng-repeat="page in pages" data-ng-click="changePage(page)"  heading="{{page}}">
+	    </uib-tab>
+	</uib-tabset>
+</div>
+
+
+<div class="page-content">
+	<!-- <div class="my-icon">
+		<a href="javascript:void(0)"><span>新增角色</span></a>
+	</div> -->
+	<div data-ui-view style="height:100%"></div>
+</div>

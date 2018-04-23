@@ -38,12 +38,6 @@ define(function (require) {
 		        }
 		      }
 		    });
-
-		    // modalInstance.result.then(function (selectedItem) {
-		    //   $ctrl.selected = selectedItem;
-		    // }, function () {
-		    //   $log.info('Modal dismissed at: ' + new Date());
-		    // });
 		};
 
 		$scope.save = function(){
@@ -66,7 +60,7 @@ define(function (require) {
 		      		return index;
 		      	},
 		        users: function(){
-		        	return $scope.users;
+		        		return $scope.users;
 		        }
 		      }
 		    });
@@ -80,47 +74,57 @@ define(function (require) {
 
     }]).controller('userModalController',function ($uibModalInstance, $scope, index, users) {
     	
-    	$scope.user = {
-    		name: '',
-            role: '',
-            phoneNum: '',
-            createTime: '',
-            address: '',
-            id: '',
-            gender: '',
-    	};
-
+		$scope.user = {
+			name: '',
+			role: '',
+			phoneNum: '',
+			createTime: '',
+			address: '',
+			id: '',
+			gender: '',
+			psssword: '123456'
+		};
+	
         //TODO 要查出来
         $scope.roles = [{name:'销售员'},{name:'采购员'},{name:'管理员'}];
+	
+		$scope.init = function(){
+			if(index != null){
+				$scope.user = users[index];
+			}
+		}
+	
+		$scope.add = function(){
+			if(index != null){
+				users[index].name = $scope.user.name;
+				users[index].role = $scope.user.role;
+				users[index].phoneNum = $scope.user.phoneNum;
+				users[index].address = $scope.user.address;
+				users[index].gender = $scope.user.gender;
+				$uibModalInstance.close();
+				return
+			}else{
+				$scope.user.createTime = new Date().format("yyyy-MM-dd hh:mm:ss");
+				console.log(new Date($scope.user.createTime).getTime())
+				$scope.user.id = '007';
+			}
+			users.push($scope.user);
+			$uibModalInstance.close();
+		}
+	
+		$scope.cancel = function(){
+			$uibModalInstance.close();
+		}
 
-    	$scope.init = function(){
-    		if(index != null){
-    			$scope.user = users[index];
-    		}
-    	}
+		$scope.isCurGender = function(gender){
+			if($scope.user.gender == gender){
+				return 'checked';
+			}else{
+				return '';
+			}
+		}
 
-    	$scope.add = function(){
-    		if(index != null){
-    			users[index].name = $scope.user.name;
-    			users[index].role = $scope.user.role;
-                users[index].phoneNum = $scope.user.phoneNum;
-                users[index].address = $scope.user.address;
-                users[index].gender = $scope.user.gender;
-    			$uibModalInstance.close();
-    			return
-    		}else{
-               $scope.user.createTime = new Date();
-               $scope.user.id = '007';
-            }
-    		users.push($scope.user);
-    		$uibModalInstance.close();
-    	}
-
-    	$scope.cancel = function(){
-    		$uibModalInstance.close();
-    	}
-
-    	$scope.init();
-    });
+		$scope.init();
+	});
 
 });

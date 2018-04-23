@@ -12,6 +12,7 @@ define(function (require) {
                 controllerUrl: 'session/homeCtrl',
                 controller: 'homeCtrl'
             })
+            //系统管理部分
             .state('home.systemManage', {
                 url: '/systemManage',
                 templateUrl: 'session/systemManage.html',
@@ -24,23 +25,119 @@ define(function (require) {
             .state('home.systemManage.role', {
                 url: '/role',
                 templateUrl: 'session/role.html',
-                // new attribute for ajax load controller
                 controllerUrl: 'session/role',
                 controller: 'roleController'
             })
             .state('home.systemManage.user', {
                 url: '/user',
                 templateUrl: 'session/user.html',
-                // new attribute for ajax load controller
                 controllerUrl: 'session/user',
                 controller: 'userController'
             })
             .state('home.systemManage.record', {
                 url: '/record',
                 templateUrl: 'session/systemRecord.html',
-                // new attribute for ajax load controller
                 controllerUrl: 'session/systemRecord',
                 controller: 'systemRecordController'
+            })
+            //采购管理部分
+            .state('home.purchaseManage', {
+                url: '/purchaseManage',
+                templateUrl: 'session/purchaseManage.html',
+                controllerUrl: 'session/purchaseManage',
+                controller: 'purchaseManageController'
+            })
+            .state('home.purchaseManage.provider', {
+                url: '/provider',
+                templateUrl: 'session/provider.html',
+                controllerUrl: 'session/provider',
+                controller: 'providerController'
+            })
+            .state('home.purchaseManage.goods', {
+                url: '/goods',
+                templateUrl: 'session/purchaseGoods.html',
+                controllerUrl: 'session/purchaseGoods',
+                controller: 'purchaseGoodsController'
+            })
+            .state('home.purchaseManage.category', {
+                url: '/category',
+                templateUrl: 'session/category.html',
+                controllerUrl: 'session/category',
+                controller: 'categoryController'
+            })
+            .state('home.purchaseManage.good', {
+                url: '/good',
+                templateUrl: 'session/good.html',
+                controllerUrl: 'session/good',
+                controller: 'goodController'
+            })
+            .state('home.purchaseManage.back', {
+                url: '/back',
+                templateUrl: 'session/purchaseBack.html',
+                controllerUrl: 'session/purchaseBack',
+                controller: 'purchaseBackController'
+            })
+            //销售管理部分
+            .state('home.saleMagage', {
+                url: '/saleMagage',
+                templateUrl: 'session/saleMagage.html',
+                controllerUrl: 'session/saleMagage',
+                controller: 'saleMagageController'
+            })
+            .state('home.saleMagage.goods', {
+                url: '/goods',
+                templateUrl: 'session/saleGoods.html',
+                controllerUrl: 'session/saleGoods',
+                controller: 'saleGoodsController'
+            })
+            .state('home.saleMagage.back', {
+                url: '/back',
+                templateUrl: 'session/saleBack.html',
+                controllerUrl: 'session/saleBack',
+                controller: 'saleBackController'
+            })
+            .state('home.saleMagage.storage', {
+                url: '/storage',
+                templateUrl: 'session/storage.html',
+                controllerUrl: 'session/storage',
+                controller: 'storageController'
+            })
+            .state('home.saleMagage.record', {
+                url: '/record',
+                templateUrl: 'session/saleRecord.html',
+                controllerUrl: 'session/saleRecord',
+                controller: 'saleRecordController'
+            })
+            //统计分析部分
+            .state('home.statisticManage', {
+                url: '/statisticManage',
+                templateUrl: 'session/statisticManage.html',
+                controllerUrl: 'session/statisticManage',
+                controller: 'statisticManageController'
+            })
+            .state('home.statisticManage.purchase', {
+                url: '/purchase',
+                templateUrl: 'session/purchaseStatic.html',
+                controllerUrl: 'session/purchaseStatic',
+                controller: 'purchaseStaticController'
+            })
+            .state('home.statisticManage.sale', {
+                url: '/sale',
+                templateUrl: 'session/saleStatic.html',
+                controllerUrl: 'session/saleStatic',
+                controller: 'saleStaticController'
+            })
+            .state('home.statisticManage.profit', {
+                url: '/profit',
+                templateUrl: 'session/profitStatic.html',
+                controllerUrl: 'session/profitStatic',
+                controller: 'profitStaticController'
+            })
+            .state('home.statisticManage.storage', {
+                url: '/storage',
+                templateUrl: 'session/storageStatic.html',
+                controllerUrl: 'session/storageStatic',
+                controller: 'storageStaticController'
             })
     }]);
 });
