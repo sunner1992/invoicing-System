@@ -74,6 +74,7 @@ define(function (require) {
 
     }]).controller('userModalController',function ($uibModalInstance, $scope, index, users) {
     	
+    	//TODO 我增加了一个用户名,username为主键，id不要了，应为username唯一
 		$scope.user = {
 			name: '',
 			role: '',
@@ -82,6 +83,7 @@ define(function (require) {
 			address: '',
 			id: '',
 			gender: '',
+			username:'',
 			psssword: '123456'
 		};
 	

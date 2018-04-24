@@ -2,11 +2,12 @@ require.config({
     baseUrl: '/invoice',
     paths: {
         'jquery': '3rd/jquery/jquery.min',
-    		'angular': '3rd/angular/angular.min',
+		'angular': '3rd/angular/angular.min',
         'angular-ui-router': '3rd/angular/angular-ui-router.min',
         'angular-async-loader': '3rd/angular/angular-async-loader.min',
         'angular-css': '3rd/angular/angular-css.min',
         'angular-confirm': '3rd/angular/angular-confirm.min',
+        'angular-uuid2': '3rd/angular/angular-uuid2.min',
 //        'angular-ui-mask': 'angular/mask.min',
 //        'ng-tags-input': 'angular/ng-tags-input.min'
         
@@ -15,9 +16,10 @@ require.config({
     },
     shim: {
         'jquery': {exports: ['$','jQuery']},
-    		'angular': {exports: 'angular', deps: ['jquery']},
+		'angular': {exports: 'angular', deps: ['jquery']},
         'angular-ui-router': {deps: ['angular']},
         'angular-css': {deps: ['angular']},
+        'angular-uuid2': {deps: ['angular']},
         'angular-confirm': {deps: ['angular','jquery']},
         'bootstrap': {deps:['jquery']},
         'ui.bootstrap': { deps: ['angular', 'bootstrap'] }

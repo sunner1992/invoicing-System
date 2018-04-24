@@ -1,31 +1,26 @@
 package com.sunjiamin.invoice.model;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="role")
-// @NamedQuery(name = "User.findByName", query = "select name,address from User
-// u where u.name=?1")
-public class Role {
+@Table(name = "role")
+public class Role implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
 	@Id
-	private Long id;
-	@Column(name = "name")
+	@Column(name = "name", unique = true)
 	private String name;
 	@Column(name = "createTime")
-	private String createTime;
+	private Date createTime;
 	@Column(name = "permissions")
 	private String permissions;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
@@ -35,11 +30,11 @@ public class Role {
 		this.name = name;
 	}
 
-	public String getCreateTime() {
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(String createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 

@@ -4,10 +4,11 @@ define(function (require, exports, module) {
 
     require('angular-css')
     require('angular-confirm')
-    require('angular-ui-router');
+    require('angular-ui-router')
     require('ui.bootstrap')
+    require('angular-uuid2')
 
-    var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'angularCSS', 'cp.ngConfirm']);
+    var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'angularCSS', 'cp.ngConfirm', 'angularUUID2']);
     
     Date.prototype.format = function(fmt) { 
         var o = { 

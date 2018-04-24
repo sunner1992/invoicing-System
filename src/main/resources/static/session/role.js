@@ -4,7 +4,7 @@ define(function (require) {
     // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');
 
-    app.controller('roleController', ['$scope', '$ngConfirm', '$css', '$uibModal', function ($scope, $ngConfirm, $css, $uibModal) {
+    app.controller('roleController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'uuid2', function ($scope, $ngConfirm, $css, $uibModal, uuid2) {
         // shortcut to get angular injected service.
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
@@ -75,7 +75,7 @@ define(function (require) {
 		}
 		$scope.init();
 
-    }]).controller('roleModalController',function ($uibModalInstance, $scope, index, roles) {
+    }]).controller('roleModalController',function ($uibModalInstance, $scope, index, roles, uuid2) {
     	//添加user的Modal控制器
     	$scope.permissions = [{name:'角色管理', value:'systemManage.role'}, {name:'用户管理', value:'systemManage.user'},
     	 {name:'记录管理', value:'systemManage.record'}, {name:'供应商管理', value:'purchaseManage.provider'}, 
@@ -90,7 +90,8 @@ define(function (require) {
     		createTime: null,//实际添加时赋值
     		permissions: ''
     	};
-
+    	
+    	console.log(uuid2.newuuid())
     	$scope.init = function(){
     		if(index != null){
     			$scope.role = roles[index];
