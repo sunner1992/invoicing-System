@@ -28,8 +28,8 @@ public class User implements Serializable {
 	private String address;
 	@Column(name = "gender")
 	private String gender;
-	@Column(name = "psssword")
-	private String psssword;
+	@Column(name = "password")
+	private String password;
 
 	public String getName() {
 		return name;
@@ -88,11 +88,11 @@ public class User implements Serializable {
 	}
 
 	public String getPsssword() {
-		return psssword;
+		return password;
 	}
 
-	public void setPsssword(String psssword) {
-		this.psssword = psssword;
+	public void setPsssword(String password) {
+		this.password = password;
 	}
 
 }

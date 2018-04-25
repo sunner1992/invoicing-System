@@ -1,5 +1,6 @@
 define(function (require) {
     var app = require('../app');
+    require('proxy.js');
 
     // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');

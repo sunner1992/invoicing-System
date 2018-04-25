@@ -4,7 +4,7 @@ define(function (require) {
     // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');
 
-    app.controller('userController', ['$scope', '$ngConfirm', '$css', '$uibModal', function ($scope, $ngConfirm, $css, $uibModal) {
+    app.controller('userController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', function ($scope, $ngConfirm, $css, $uibModal, Proxy) {
         // shortcut to get angular injected service.
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
@@ -16,19 +16,17 @@ define(function (require) {
 
 		$scope.init = function(){
 			//已有用户的查询
+			Proxy.user.getAll(function success(resp){
+				console.log(resp);
+				$scope.users = resp.data;
+			})
 		}
 
 		//打开添加角色页面
 		$scope.openAddModal = function () {
 		    var modalInstance = $uibModal.open({
-		      // animation: $ctrl.animationsEnabled,
-		      // ariaLabelledBy: 'modal-title',
-		      // ariaDescribedBy: 'modal-body',
 		      templateUrl: 'session/templates/userModal.html',
 		      controller: 'userModalController',
-		      // controllerAs: '$ctrl',
-		      // size: size,
-		      // appendTo: parentElem,
 		      resolve: {
 		      	index: function(){
 		      		return null;
@@ -46,14 +44,8 @@ define(function (require) {
 
 		$scope.modify = function(index){
 			var modalInstance = $uibModal.open({
-		      // animation: $ctrl.animationsEnabled,
-		      // ariaLabelledBy: 'modal-title',
-		      // ariaDescribedBy: 'modal-body',
 		      templateUrl: 'session/templates/userModal.html',
 		      controller: 'userModalController',
-		      // controllerAs: '$ctrl',
-		      // size: size,
-		      // appendTo: parentElem,
 		      resolve: {
 		      	index: function(){
                     //TODO 
@@ -67,12 +59,14 @@ define(function (require) {
 		}
 
 		$scope.delete = function(index){
-			$scope.users.splice(index, 1);
-			console.log($scope.users);
+			Proxy.user.del({username: $scope.users[index].username}, function success(resp){
+				console.log(resp)
+				$scope.users.splice(index, 1);
+			})
 		}
 		$scope.init();
 
-    }]).controller('userModalController',function ($uibModalInstance, $scope, index, users) {
+    }]).controller('userModalController',function ($uibModalInstance, $scope, index, users, Proxy) {
     	
     	//TODO 我增加了一个用户名,username为主键，id不要了，应为username唯一
 		$scope.user = {
@@ -84,7 +78,7 @@ define(function (require) {
 			id: '',
 			gender: '',
 			username:'',
-			psssword: '123456'
+			password: ''
 		};
 	
         //TODO 要查出来
@@ -92,7 +86,7 @@ define(function (require) {
 	
 		$scope.init = function(){
 			if(index != null){
-				$scope.user = users[index];
+				$scope.user = angular.copy(users[index]);
 			}
 		}
 	
@@ -103,14 +97,18 @@ define(function (require) {
 				users[index].phoneNum = $scope.user.phoneNum;
 				users[index].address = $scope.user.address;
 				users[index].gender = $scope.user.gender;
-				$uibModalInstance.close();
-				return
+				users[index].username = $scope.user.username;
+				users[index].password = $scope.user.password;
+				Proxy.user.update({username:users[index].username}, $scope.user, function success(resp){
+					console.log(resp)
+				})
 			}else{
-				$scope.user.createTime = new Date().format("yyyy-MM-dd hh:mm:ss");
-				console.log(new Date($scope.user.createTime).getTime())
-				$scope.user.id = '007';
+				$scope.user.createTime = new Date();
+				Proxy.user.add($scope.user, function success(resp){
+					console.log(resp);
+					users.push($scope.user);
+				})
 			}
-			users.push($scope.user);
 			$uibModalInstance.close();
 		}
 	

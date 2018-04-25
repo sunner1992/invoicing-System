@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sunjiamin.invoice.model.Result;
 import com.sunjiamin.invoice.model.User;
 import com.sunjiamin.invoice.repository.UserRepository;
 
@@ -25,31 +26,32 @@ public class UserRS {
 	@Autowired
 	private UserRepository _userRepository;
 
-	@RequestMapping(value = "/add", method = { RequestMethod.POST })
-	public String add(@RequestBody User user) {
+	@RequestMapping(method = { RequestMethod.POST })
+	public Result<User> add(@RequestBody User user) {
 		if (_userRepository.existsById(user.getUsername())) {
 			logger.debug("增加用户失败,用户已经存在-->username: " + user.getUsername());
-			return "已经存在";
+			return new Result<User>(200, "username为" + user.getUsername() + "的用户已经存在", null);
 		} else {
 			_userRepository.save(user);
 			logger.debug("新增用户：  id：" + user.getUsername());
-			return "增加成功";
+			return new Result<User>(200, "增加用户成功", user);
 		}
 	}
 
-	@RequestMapping(value = "/modify", method = { RequestMethod.POST })
-	public void modify(@RequestBody User user) {
+	@RequestMapping(method = { RequestMethod.PUT })
+	public void update(@RequestParam String username, @RequestBody User user) {
 		_userRepository.deleteById(user.getUsername());
 		_userRepository.save(user);
-		logger.debug("修改用户--> id:" + user.getUsername());
+		logger.debug("修改用户--> username:" + user.getUsername());
 	}
 
 	@RequestMapping(value = "/getAll", method = { RequestMethod.GET })
-	public List<User> getAll() {
-		return _userRepository.findAll();
+	public Result<List<User>> getAll() {
+		List<User> users = _userRepository.findAll();
+		return new Result<List<User>>(200, "查询所有用户成功", users);
 	}
 
-	@RequestMapping(value = "/delete", method = { RequestMethod.GET })
+	@RequestMapping(method = { RequestMethod.DELETE })
 	public void deleteByUsername(@RequestParam String username) {
 		_userRepository.deleteById(username);
 		logger.debug("删除用户--> id:" + username);

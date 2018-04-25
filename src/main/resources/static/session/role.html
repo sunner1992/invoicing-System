@@ -1,7 +1,7 @@
 <div class="system-role">
 	<div class="table-ctrl">
 		<button type="button" class="btn btn-info" ng-click="openAddModal()">增加</button>
-      	<button type="button" class="btn btn-info" ng-click="save()">保存</button>
+      	<!-- <button type="button" class="btn btn-info" ng-click="save()">保存</button> -->
 	</div>
 	<div class="table-content">
 		<!-- <div style="position: relative;width: 100%;height: 100%;"> -->
@@ -20,7 +20,7 @@
 	 					<td style="min-width: 50px;text-align: center;">{{$index + 1}}</td>
 	 					<td style="min-width: 100px;text-align: center;"><a href="javascript:void(0)" data-ng-click="modify($index)"><span>修改</span></a>   <a href="javascript:void(0)" data-ng-click="deleteRole($index)"><span>删除</span></a></td>
 	 					<td style="min-width: 100px;text-align: center;">{{role.name}}</td>
-	 					<td style="min-width: 250px;text-align: center;">{{role.createTime}}</td>
+	 					<td style="min-width: 250px;text-align: center;">{{role.createTime | date:'yyyy-MM-dd'}}</td>
 	 					<td style="flex-grow: 1;text-align: center;">{{role.permissions}}</td>
 	 				</tr>
 	 			</tbody>

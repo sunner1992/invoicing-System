@@ -1,7 +1,7 @@
 <div class="system-role">
 	<div class="table-ctrl">
-		<button type="button" class="btn btn-info" ng-click="openAddModal()">增加(用户界面)</button>
-      	<button type="button" class="btn btn-info" ng-click="save()">保存</button>
+		<button type="button" class="btn btn-info" ng-click="openAddModal()">新增用户</button>
+      	<!-- <button type="button" class="btn btn-info" ng-click="save()">保存</button> -->
 	</div>
 	<div class="table-content">
 		<!-- <div style="position: relative;width: 100%;height: 100%;"> -->
@@ -10,6 +10,8 @@
 	 				<tr style="display: flex;flex-grow: 1">
 	 					<th style="min-width: 80px; text-align: center;">名字</th>
 	 					<th style="min-width: 100px;text-align: center;">操作</th>
+	 					<th style="min-width: 150px;text-align: center;">用户名</th>
+	 					<th style="min-width: 150px;text-align: center;">密码</th>
 	 					<th style="min-width: 60px;text-align: center;">性别</th>
 	 					<th style="min-width: 100px;text-align: center;">角色</th>
 	 					<th style="min-width: 250px;text-align: center;">创建时间</th>
@@ -21,9 +23,11 @@
 	 				<tr data-ng-repeat="user in users" style="display: flex;min-height: 40px">
 	 					<td style="min-width: 80px;text-align: center;">{{user.name}}</td>
 	 					<td style="min-width: 100px;text-align: center;"><a href="javascript:void(0)" data-ng-click="modify($index)"><span>修改</span></a>   <a href="javascript:void(0)" data-ng-click="delete($index)"><span>删除</span></a></td>
+	 					<td style="min-width: 150px;text-align: center;">{{user.username}}</td>
+	 					<td style="min-width: 150px;text-align: center;">{{user.password}}</td>
 	 					<td style="min-width: 60px;text-align: center;">{{user.gender}}</td>
 	 					<td style="min-width: 100px;text-align: center;">{{user.role}}</td>
-	 					<td style="min-width: 250px;text-align: center;">{{user.createTime}}</td>
+	 					<td style="min-width: 250px;text-align: center;">{{user.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>
 	 					<td style="min-width: 150px;text-align: center;">{{user.phoneNum}}</td>
 	 					<td style="flex-grow: 1;text-align: center;">{{user.address}}</td>
 	 				</tr>

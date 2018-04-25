@@ -4,7 +4,7 @@ define(function (require) {
     // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');
 
-    app.controller('roleController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'uuid2', function ($scope, $ngConfirm, $css, $uibModal, uuid2) {
+    app.controller('roleController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'uuid2', 'Proxy', function ($scope, $ngConfirm, $css, $uibModal, uuid2, Proxy) {
         // shortcut to get angular injected service.
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
@@ -14,6 +14,10 @@ define(function (require) {
 
 		$scope.init = function(){
 			//已有角色的查询
+            Proxy.role.getAll({},function success(resp){
+                console.log(resp)
+                $scope.roles = resp.data;
+            })
 		}
 
 		//打开添加角色页面
@@ -70,12 +74,17 @@ define(function (require) {
 		}
 
 		$scope.deleteRole = function(index){
-			$scope.roles.splice(index, 1);
-			console.log($scope.roles);
+            var role = $scope.roles[index]
+            console.log(index)
+            console.log(role)
+            Proxy.role.del({name: role.name}, function success(resp){
+                console.log(resp)
+                $scope.roles.splice(index, 1);
+            })
 		}
 		$scope.init();
 
-    }]).controller('roleModalController',function ($uibModalInstance, $scope, index, roles, uuid2) {
+    }]).controller('roleModalController',function ($uibModalInstance, $scope, index, roles, uuid2, Proxy) {
     	//添加user的Modal控制器
     	$scope.permissions = [{name:'角色管理', value:'systemManage.role'}, {name:'用户管理', value:'systemManage.user'},
     	 {name:'记录管理', value:'systemManage.record'}, {name:'供应商管理', value:'purchaseManage.provider'}, 
@@ -91,10 +100,10 @@ define(function (require) {
     		permissions: ''
     	};
     	
-    	console.log(uuid2.newuuid())
+    	// console.log(uuid2.newuuid())
     	$scope.init = function(){
     		if(index != null){
-    			$scope.role = roles[index];
+    			$scope.role = angular.copy(roles[index]);
     			sychronizePermission();
     		}
     	}
@@ -108,15 +117,20 @@ define(function (require) {
     		if($scope.role.permissions.length > 0){
     			$scope.role.permissions = $scope.role.permissions.slice(0, $scope.role.permissions.length-1);
     		}
-    		$scope.role.createTime = new Date();
+    		
     		if(index != null){
-    			roles[index].name = $scope.role.name;
-    			roles[index].createTime = $scope.role.createTime;
-    			roles[index].permissions = $scope.role.permissions;
-    			$uibModalInstance.close();
-    			return
-    		}
-    		roles.push($scope.role);
+                //修改
+                Proxy.role.update({name: roles[index].name},$scope.role, function success(resp){
+                    console.log(resp)
+                    roles[index].name = $scope.role.name;
+                    roles[index].permissions = $scope.role.permissions;
+                })
+    		}else{
+               $scope.role.createTime = new Date().format('yyyy-MM-dd');
+               Proxy.role.add($scope.role, function success(resp){
+                    roles.push($scope.role);
+                })
+            }
     		$uibModalInstance.close();
     	}
 

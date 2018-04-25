@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sunjiamin.invoice.model.Result;
 import com.sunjiamin.invoice.model.Role;
 import com.sunjiamin.invoice.repository.RoleRepository;
 
@@ -23,7 +24,8 @@ public class RoleRS {
 	@Autowired
 	private RoleRepository _roleRepository;
 
-	@RequestMapping(value = "/add", method = { RequestMethod.POST })
+	// @RequestMapping(value = "/add", method = { RequestMethod.POST })
+	@RequestMapping(method = { RequestMethod.POST })
 	public void add(@RequestBody Role role) {
 		_roleRepository.save(role);
 		logger.debug("增加角色" + role.getName());
@@ -31,23 +33,28 @@ public class RoleRS {
 	}
 
 	@RequestMapping(value = "/getAll", method = { RequestMethod.GET })
-	public List<Role> getAll() {
-		return _roleRepository.findAll();
+	public Result<List<Role>> getAll() {
+		logger.debug("查询全部角色");
+		return new Result<List<Role>>(200, "查询全部角色成功", _roleRepository.findAll());
 	}
 
-	@RequestMapping(value = "/modify", method = { RequestMethod.POST })
-	public void modify(@RequestBody Role role) {
-		_roleRepository.deleteById(role.getName());
+	// @RequestMapping(value = "/update", method = { RequestMethod.POST })
+	@RequestMapping(method = { RequestMethod.PUT })
+	public void update(@RequestParam String name, @RequestBody Role role) {
+		logger.debug(name);
+		_roleRepository.deleteById(name);
 		_roleRepository.save(role);
-		logger.debug("修改角色" + role.getName());
+		logger.debug("修改角色 --> name:" + name + " 修改为name:" + role.getName());
 	}
 
-	@RequestMapping(value = "/get", method = { RequestMethod.GET })
-	public Role getByName(@RequestParam String name) {
-		return _roleRepository.findById(name).get();
+	@RequestMapping(method = { RequestMethod.GET })
+	public Result<Role> getByName(@RequestParam String name) {
+		Role role = _roleRepository.findById(name).get();
+		return new Result<Role>(200, "查询角色成功", role);
 	}
 
-	@RequestMapping(value = "/delete", method = { RequestMethod.GET })
+	// @RequestMapping(value = "/delete", method = { RequestMethod.GET })
+	@RequestMapping(method = { RequestMethod.DELETE })
 	public void deleteByName(@RequestParam String name) {
 		_roleRepository.deleteById(name);
 		logger.debug("删除角色-->name:" + name);

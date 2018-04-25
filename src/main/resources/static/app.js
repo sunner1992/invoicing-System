@@ -7,8 +7,10 @@ define(function (require, exports, module) {
     require('angular-ui-router')
     require('ui.bootstrap')
     require('angular-uuid2')
+    require('angular-resource')
+//    require('proxy.js')
 
-    var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'angularCSS', 'cp.ngConfirm', 'angularUUID2']);
+    var app = angular.module('app', ['ui.router', 'ui.bootstrap', 'angularCSS', 'cp.ngConfirm', 'angularUUID2', 'ngResource']);
     
     Date.prototype.format = function(fmt) { 
         var o = { 
@@ -29,7 +31,7 @@ define(function (require, exports, module) {
             }
         }
        return fmt; 
-   } 
+   }
 
     // initialze app module for angular-async-loader
     asyncLoader.configure(app);
