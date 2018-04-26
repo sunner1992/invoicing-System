@@ -2,7 +2,7 @@
 	<div class="my-modal-header">
 		<h1>商品添加</h1>
 	</div>
-	<div class="my-modal-content">
+	<div class="my-modal-content" data-ng-show="isModify">
 		<div class="form-group">
 		    <label for="roleName">商品ID</label>
 		    <input type="text" class="form-control" data-ng-model="good.id">
@@ -16,8 +16,8 @@
 	</div>
 	<div class="my-modal-content">
 		<div class="form-group">
-		    <label for="roleName">商品类别</label>
-		    <input type="text" class="form-control" data-ng-model="good.category">
+	      <label>商品类别</label>
+	      <select class="form-control" ng-model="good.category" ng-options="category.name as category.name for category in categorys"></select>
 	    </div>
 	</div>
 	<div class="my-modal-content">
@@ -28,8 +28,8 @@
 	</div>
 	<div class="my-modal-content">
 		<div class="form-group">
-		    <label for="roleName">供应商</label>
-		    <input type="text" class="form-control" data-ng-model="good.provider">
+	      <label>供应商</label>
+	      <select class="form-control" ng-model="good.provider" ng-options="p.contact as p.contact for p in providers"></select>
 	    </div>
 	</div>
 	<div class="my-modal-footer" style="display: flex; justify-content: flex-end;">

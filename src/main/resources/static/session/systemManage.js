@@ -11,8 +11,11 @@ define(function (require) {
 		$css.add('session/systemManage.css')
 
 		$scope.pages = ['角色管理', '用户管理', '记录管理'];
-		$scope.pageCur = '角色管理';
-		console.log('刷新页面')
+
+		$scope.init = function(){
+			$scope.curIndex = getCurPage();
+			console.log($scope.pageCur);
+		}
 
 		$scope.changePage = function(page){
 			if($scope.pageCur == page){
@@ -32,16 +35,25 @@ define(function (require) {
 					$state.go('home.systemManage.record');
 					break;
 			}
-			// if($scope.pageCur == '角色管理'){
-			// 	$state.go('home.systemManage.role');
-			// }
-			// if($scope.pageCur == '用户管理'){
-			// 	$state.go('home.systemManage.user')
-			// }
-			// if($scope.pageCur == '记录管理'){
-			// 	$state.go('home.systemManage.record')
-			// }
 		}
+
+		var getCurPage = function(){
+			var state = $state.current.name;
+			console.log(state)
+			switch(state){
+				case 'home.systemManage.role':
+					$scope.pageCur = '角色管理';
+					return 0
+				case 'home.systemManage.user':
+					$scope.pageCur = '用户管理';
+					return 1
+				case 'home.systemManage.record':
+					$scope.pageCur = '记录管理';
+					return 2
+			}
+		}
+
+		$scope.init();
     }]);
 
 });

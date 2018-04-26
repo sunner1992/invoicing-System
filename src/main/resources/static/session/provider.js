@@ -1,15 +1,12 @@
 define(function (require) {
     var app = require('../app');
 
-    // dynamic load services here or add into dependencies of ui-router state config
-    // require('../services/usersService');
-
-    app.controller('providerController', ['$scope', '$ngConfirm', '$css', '$uibModal', function ($scope, $ngConfirm, $css, $uibModal) {
+    app.controller('providerController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', 'uuid2', function ($scope, $ngConfirm, $css, $uibModal, Proxy, uuid2) {
         
         //采购商
   //       $scope.provider = {
   		//  id: '',//公司编号
-		// 	name: '',//，联系人名称
+		// 	contact: '',//，联系人名称
 		// 	phoneNum: '',//联系电话
 		//  companyPhone: ''//公司电话
 		// 	company: '',//公司名称
@@ -20,10 +17,12 @@ define(function (require) {
 		
 		$scope.providers = [];
 
-        //TODO 刷新的时候Tab会跑到第一个导致tab和实际的页对不上
-
 		$scope.init = function(){
 			//已有用户的查询
+			Proxy.provider.getAll(function success(resp){
+				console.log(resp)
+				$scope.providers = resp.data;
+			})
 		}
 
 		//打开添加角色页面
@@ -41,10 +40,6 @@ define(function (require) {
 		      }
 		    });
 		};
-		//保存不要了，直接的操作修改就是实际的
-		$scope.save = function(){
-
-		}
 
 		$scope.modify = function(index){
 			var modalInstance = $uibModal.open({
@@ -63,16 +58,19 @@ define(function (require) {
 		}
 		//TODO 实际删除+页面删除
 		$scope.delete = function(index){
-			$scope.providers.splice(index, 1);
-			console.log($scope.providers);
+			var p = $scope.providers[index]
+			Proxy.provider.del({id: p.id}, function success(resp){
+				console.log(resp)
+				$scope.providers.splice(index, 1);
+			})
 		}
 		$scope.init();
 
-    }]).controller('providerModalController',function ($uibModalInstance, $scope, index, providers) {
+    }]).controller('providerModalController',function ($uibModalInstance, $scope, index, providers, uuid2, Proxy) {
     	
 		$scope.provider = {
          	id: '',//公司编号
-			name: '',//采购商名称，联系人名称
+			contact: '',//采购商名称，联系人名称
 			phoneNum: '',//联系电话
 		 	companyPhone: '',//公司联系电话
 			company: '',//公司名称
@@ -81,25 +79,26 @@ define(function (require) {
 	
 		$scope.init = function(){
 			if(index != null){
-				$scope.provider = providers[index];
+				$scope.provider = angular.copy(providers[index]);
 			}
 		}
 		//修改和添加为两个方法，修改的时候页面只是数据变
 		$scope.add = function(){
 			if(index != null){
-				providers[index].name = $scope.provider.name;//TODO
-				providers[index].phoneNum = $scope.provider.phoneNum;
-				providers[index].companyPhone = $scope.provider.companyPhone;
-				providers[index].company = $scope.provider.company;
-				providers[index].address = $scope.provider.address;
-				$uibModalInstance.close();
-				return
+				Proxy.provider.update($scope.provider, function success(){
+					providers[index].contact = $scope.provider.contact;
+					providers[index].phoneNum = $scope.provider.phoneNum;
+					providers[index].companyPhone = $scope.provider.companyPhone;
+					providers[index].company = $scope.provider.company;
+					providers[index].address = $scope.provider.address;
+				})
 			}else{
-				// $scope.user.createTime = new Date().format("yyyy-MM-dd hh:mm:ss");
-				// console.log(new Date($scope.user.createTime).getTime())
-				$scope.provider.id = '007';
+				$scope.provider.id = uuid2.newuuid();
+				console.log($scope.provider);
+				Proxy.provider.add($scope.provider, function success(resp){
+					providers.push($scope.provider);
+				})
 			}
-			providers.push($scope.provider);
 			$uibModalInstance.close();
 		}
 	

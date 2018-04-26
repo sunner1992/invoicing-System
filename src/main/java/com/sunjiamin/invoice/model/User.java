@@ -87,11 +87,11 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	public String getPsssword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPsssword(String password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 

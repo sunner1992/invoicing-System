@@ -4,13 +4,17 @@ define(function (require) {
     // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');
 
-    app.controller('roleController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'uuid2', 'Proxy', function ($scope, $ngConfirm, $css, $uibModal, uuid2, Proxy) {
+    app.controller('roleController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'uuid2', 'Proxy', '$stateParams', '$state',
+        function ($scope, $ngConfirm, $css, $uibModal, uuid2, Proxy, $stateParams, $state) {
         // shortcut to get angular injected service.
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
 		$css.add('session/role.css');
+		//因为这一级的切换时tab加载的css是累加，导致了样式乱掉问题
+		$css.remove(['session/user.css']);
 		
 		$scope.roles = [];
+        console.log($stateParams)
 
 		$scope.init = function(){
 			//已有角色的查询

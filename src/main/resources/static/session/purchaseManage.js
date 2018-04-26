@@ -6,8 +6,12 @@ define(function (require) {
 
 		$scope.pages = ['供应商管理', '采购管理', '商品类别管理', '商品管理', '退货管理'];
 		$scope.pageCur = '供应商管理';
-		console.log('刷新页面')
-
+		$scope.curIndex = 0;
+		
+		$scope.init = function(){
+			$scope.curIndex = getCurIndex();
+		}
+		
 		$scope.changePage = function(page){
 			if($scope.pageCur == page){
 				return
@@ -33,6 +37,29 @@ define(function (require) {
 					break;
 			}
 		}
+		
+		var getCurIndex = function(){
+			var state = $state.current.name;
+			switch(state){
+				case 'home.purchaseManage.provider':
+					$scope.pageCur = '供应商管理';
+					return 0;
+				case 'home.purchaseManage.goods':
+					$scope.pageCur = '采购管理';
+					return 1;
+				case 'home.purchaseManage.category':
+					$scope.pageCur = '商品类别管理';
+					return 2;
+				case 'home.purchaseManage.good':
+					$scope.pageCur = '商品管理';
+					return 3
+				case 'home.purchaseManage.back':
+					$scope.pageCur = '退货管理';
+					return 4;
+			}
+		}
+		
+		$scope.init();
     }]);
 
 });

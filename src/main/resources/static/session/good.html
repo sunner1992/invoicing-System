@@ -1,14 +1,13 @@
 <div class="system-role">
 	<div class="table-ctrl">
-		<button type="button" class="btn btn-info" data-ng-click="openAddModal()">增加(供应商界面)</button>
-      	<button type="button" class="btn btn-info" data-ng-click="save()">保存</button>
+		<button type="button" class="btn btn-info" data-ng-click="openAddModal()">增加商品</button>
 	</div>
 	<div class="table-content">
 		<!-- <div style="position: relative;width: 100%;height: 100%;"> -->
 			<table class="table table-bordered table-hover" style="display: flex;width: 100%;flex-direction: column;max-height: 90%;">
 	 			<thead class="fixedThead" style="width: 100%;height: 40px;">
 	 				<tr style="display: flex;flex-grow: 1">
-	 					<th style="min-width: 80px; text-align: center;">商品ID</th>
+	 					<th style="min-width: 300px; text-align: center;">商品ID</th>
 	 					<th style="min-width: 100px;text-align: center;">操作</th>
 	 					<th style="min-width: 200px;text-align: center;">商品名称</th>
 	 					<th style="min-width: 150px;text-align: center;">类别</th>
@@ -18,7 +17,7 @@
 	 			</thead>
 	 			<tbody class="scrollTbody">
 	 				<tr data-ng-repeat="good in goods" style="display: flex;min-height: 40px">
-	 					<td style="min-width: 80px;text-align: center;">{{good.id}}</td>
+	 					<td style="min-width: 300px;text-align: center;">{{good.id}}</td>
 	 					<td style="min-width: 100px;text-align: center;"><a href="javascript:void(0)" data-ng-click="modify($index)"><span>修改</span></a>   <a href="javascript:void(0)" data-ng-click="delete($index)"><span>删除</span></a></td>
 	 					<td style="min-width: 200px;text-align: center;">{{good.name}}</td>
 	 					<td style="min-width: 150px;text-align: center;">{{good.category}}</td>

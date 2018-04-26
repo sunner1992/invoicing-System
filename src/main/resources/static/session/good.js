@@ -4,7 +4,7 @@ define(function (require) {
     // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');
 
-    app.controller('goodController', ['$scope', '$ngConfirm', '$css', '$uibModal', function ($scope, $ngConfirm, $css, $uibModal) {
+    app.controller('goodController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', 'uuid2', function ($scope, $ngConfirm, $css, $uibModal, Proxy, uuid2) {
         
         //商品
   //       $scope.good = {
@@ -21,10 +21,10 @@ define(function (require) {
 		
 		$scope.goods = [];
 
-        //TODO 刷新的时候Tab会跑到第一个导致tab和实际的页对不上
-
 		$scope.init = function(){
-			//已有用户的查询
+			Proxy.good.getAll(function success(resp){
+				$scope.goods = resp.data;
+			})
 		}
 
 		//打开添加角色页面
@@ -42,10 +42,6 @@ define(function (require) {
 		      }
 		    });
 		};
-		//保存不要了，直接的操作修改就是实际的
-		$scope.save = function(){
-
-		}
 
 		$scope.modify = function(index){
 			var modalInstance = $uibModal.open({
@@ -53,7 +49,6 @@ define(function (require) {
 		     	controller: 'goodModalController',
 		      	resolve: {
 		      	index: function(){
-                    //TODO 
 		      		return index;
 		      	},
 		        goods: function(){
@@ -64,12 +59,14 @@ define(function (require) {
 		}
 		//TODO 实际删除+页面删除
 		$scope.delete = function(index){
-			$scope.goods.splice(index, 1);
-			console.log($scope.goods);
+			var good = $scope.goods[index];
+			Proxy.good.del(good,function success(resp){
+				$scope.goods.splice(index, 1);
+			})
 		}
 		$scope.init();
 
-    }]).controller('goodModalController',function ($uibModalInstance, $scope, index, goods) {
+    }]).controller('goodModalController',function ($uibModalInstance, $scope, index, goods, Proxy, uuid2) {
     	
 		$scope.good = {
   			id: '',//商品id
@@ -80,31 +77,48 @@ define(function (require) {
 			provider: '',//供应商
 			providerId: ''//供应商id
 		};
-	
+
+		$scope.categorys = [];
+		$scope.providers = [];
+		//类别应该是选出来的
+		//供应商名字也应该是查出来的
+
 		$scope.init = function(){
 			if(index != null){
 				$scope.good = goods[index];
+				$scope.isModify = true;
+			}else{
+				$scope.isModify = false;
 			}
+			Proxy.provider.getAll(function success(resp){
+				$scope.providers = resp.data;
+				console.log($scope.providers);
+			})
+			Proxy.category.getAll(function success(resp){
+				$scope.categorys = resp.data;
+				console.log($scope.categorys);
+			})
 		}
 		//修改和添加为两个方法，修改的时候页面只是数据变
 		$scope.add = function(){
+			updateCategoryId();
+			updateProviderId();
+
 			if(index != null){
-				goods[index].id = $scope.good.id;
-				goods[index].name = $scope.good.name;
-				goods[index].creater = $scope.good.creater;
-				goods[index].category = $scope.good.category;
-				goods[index].categoryId = '000';
-				goods[index].provider = $scope.good.provider;
-				goods[index].providerId = '000';
-				$uibModalInstance.close();
-				return
+				Proxy.good.update($scope.good,function success(resp){
+					goods[index].name = $scope.good.name;
+					goods[index].creater = $scope.good.creater;
+					goods[index].category = $scope.good.category;
+					goods[index].categoryId = $scope.good.categoryId;
+					goods[index].provider = $scope.good.provider;
+					goods[index].providerId = $scope.good.providerId;
+				})
 			}else{
-				// $scope.user.createTime = new Date().format("yyyy-MM-dd hh:mm:ss");
-				// console.log(new Date($scope.user.createTime).getTime())
-				$scope.good.categoryId = '007';
-				$scope.good.providerId = '007';
+				$scope.good.id = uuid2.newuuid();
+				Proxy.good.add($scope.good, function success(resp){
+					goods.push($scope.good);
+				})
 			}
-			goods.push($scope.good);
 			$uibModalInstance.close();
 		}
 	
@@ -112,6 +126,21 @@ define(function (require) {
 			$uibModalInstance.close();
 		}
 
+		var updateCategoryId = function(){
+			for(var category of $scope.categorys){
+				if(category.name == $scope.good.category){
+					$scope.good.categoryId = category.id;
+				}
+			}
+		}
+
+		var updateProviderId = function(){
+			for(var provider of $scope.providers){
+				if($scope.good.provider == provider.contact){
+					$scope.good.providerId = provider.id;
+				}
+			}
+		}
 		$scope.init();
 	});
 

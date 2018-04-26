@@ -1,11 +1,11 @@
 <div class="my-modal" style="padding: 50px">
 	<div class="my-modal-header">
-		<h1>供应商添加</h1>
+		<h1>供应商信息</h1>
 	</div>
 	<div class="my-modal-content">
 		<div class="form-group">
 		    <label for="roleName">联系人</label>
-		    <input type="text" class="form-control" data-ng-model="provider.name">
+		    <input type="text" class="form-control" data-ng-model="provider.contact">
 	    </div>
 		<div class="form-group">
 		    <label for="phoneNum">联系人电话</label>
@@ -25,7 +25,7 @@
 		</div>
 	</div>
 	<div class="my-modal-footer" style="display: flex; justify-content: flex-end;">
-		<button type="button" class="btn btn-info" data-ng-click="add()" style="margin-left: 20px">添加</button>
+		<button type="button" class="btn btn-info" data-ng-click="add()" style="margin-left: 20px">确定</button>
       	<button type="button" class="btn btn-info" data-ng-click="cancel()" style="margin-left: 20px">取消</button>
 	</div>
 </div>

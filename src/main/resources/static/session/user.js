@@ -9,6 +9,7 @@ define(function (require) {
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
 		$css.add('session/user.css');
+		$css.remove(['session/role.css']);
 		
 		$scope.users = [];
 
