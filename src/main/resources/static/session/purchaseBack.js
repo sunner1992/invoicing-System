@@ -1,31 +1,28 @@
 define(function (require) {
     var app = require('../app');
 
-    // dynamic load services here or add into dependencies of ui-router state config
-    // require('../services/usersService');
-
-    app.controller('purchaseBackController', ['$scope', '$ngConfirm', '$css', '$uibModal', function ($scope, $ngConfirm, $css, $uibModal) {
+    app.controller('purchaseBackController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', function ($scope, $ngConfirm, $css, $uibModal, Proxy) {
         
         //商品,分两种，这个是页面显示的，添加页面的只有id和数量
-        $scope.good = {
-  			id: '',//商品id
-			name: '',//商品名称
-			creater: '',//生产商
-			category: '',//类别
-			categoryId: '',//商品id
-			provider: '',//供应商
-			providerId: '',//供应商id
-			count: ''//退货数量
-		};
+  //       $scope.purchase = {
+  //		id:'',//后台会有不用主动赋值
+  // 		goodId: '',//商品id
+		// 	goodName: '',//商品名称
+		// 	creater: '',//生产商
+		// 	category: '',//类别
+		// 	provider: '',//供应商
+		// 	count: ''//退货数量
+		// };
 
-		$css.add('session/good.css');
+		$css.add('session/purchaseBack.css');
 		
-		$scope.goods = [];
-
-        //TODO 刷新的时候Tab会跑到第一个导致tab和实际的页对不上
+		$scope.purchaseBacks = [];
 
 		$scope.init = function(){
 			//已有用户的查询
+			Proxy.purchaseBack.getAll(function success(resp){
+				$scope.purchaseBacks = resp.data;
+			})
 		}
 
 		//打开添加角色页面
@@ -37,16 +34,15 @@ define(function (require) {
 		      	index: function(){
 		      		return null;
 		      	},
-		        goods: function(){
-		        	return $scope.goods;
+		        purchaseBacks: function(){
+		        	return $scope.purchaseBacks;
+		        },
+		        mainInit: function(){
+		        	return $scope.init;
 		        }
 		      }
 		    });
 		};
-		//保存不要了，直接的操作修改就是实际的
-		$scope.save = function(){
-
-		}
 
 		$scope.modify = function(index){
 			var modalInstance = $uibModal.open({
@@ -57,58 +53,51 @@ define(function (require) {
                     //TODO 
 		      		return index;
 		      	},
-		        goods: function(){
-		        		return $scope.goods;
+		        purchaseBacks: function(){
+		        		return $scope.purchaseBacks;
+		        },
+		        mainInit: function(){
+		        	return $scope.init;
 		        }
 		      }
 		    });
 		}
-		//TODO 实际删除+页面删除
+		
 		$scope.delete = function(index){
-			$scope.goods.splice(index, 1);
-			console.log($scope.goods);
+			var purchaseBack = $scope.purchaseBacks[index];
+			Proxy.purchaseBack.del(purchaseBack, function success(resp){
+				$scope.purchaseBacks.splice(index, 1);
+				console.log($scope.purchaseBacks);
+			})
 		}
+
 		$scope.init();
 
-    }]).controller('purchaseBackModalController',function ($uibModalInstance, $scope, index, goods) {
+    }]).controller('purchaseBackModalController',function ($uibModalInstance, $scope, index, purchaseBacks, mainInit, Proxy) {
     	
-		$scope.good = {
-  			id: '',//商品id
-			name: '',//商品名称
-			creater: '',//生产商
-			category: '',//类别
-			categoryId: '',//商品id
-			provider: '',//供应商
-			providerId: '',//供应商id
-			count: 0//退货数量
+		$scope.purchaseBack = {
+  			goodId: '',//商品id
+			count: 0,//退货数量
+			time: '',//退货时间
 		};
 	
 		$scope.init = function(){
 			if(index != null){
-				$scope.good = goods[index];
+				$scope.purchaseBack = purchaseBacks[index];
 			}
 		}
 		//修改和添加为两个方法，修改的时候页面只是数据变
 		$scope.add = function(){
 			if(index != null){
-				goods[index].id = $scope.good.id;
-				goods[index].name = $scope.good.name;
-				goods[index].creater = $scope.good.creater;
-				goods[index].category = $scope.good.category;
-				goods[index].categoryId = '000';
-				goods[index].provider = $scope.good.provider;
-				goods[index].providerId = '000';
-				goods[index].count = 10;
-				$uibModalInstance.close();
-				return
+				Proxy.purchaseBack.update($scope.purchaseBack, function success(resp){
+					mainInit();
+				})
 			}else{
-				// $scope.user.createTime = new Date().format("yyyy-MM-dd hh:mm:ss");
-				// console.log(new Date($scope.user.createTime).getTime())
-				$scope.good.categoryId = '007';
-				$scope.good.providerId = '007';
-				$scope.good.count = 10;
+				$scope.purchaseBack.time = new Date();
+				Proxy.purchaseBack.add($scope.purchaseBack, function success(resp){
+					mainInit();
+				})
 			}
-			goods.push($scope.good);
 			$uibModalInstance.close();
 		}
 	

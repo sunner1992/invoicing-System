@@ -96,7 +96,41 @@ define(function (require) {
     					action: 'getAll'
     				}
     			}
-    		})
+    		}),
+    		purchase: $resource('./purchase/:action', {}, {
+    			'add': {
+    				method: 'POST'
+    			},
+    			'del': {
+    				method: 'DELETE'
+    			},
+    			'update': {
+    				method: 'PUT'
+    			},
+    			'getAll': {
+    				method: 'GET',
+    				params: {
+    					action: 'getAll'
+    				}
+    			}
+    		}),
+    		purchaseBack: $resource('./purchaseBack/:action', {}, {
+    			'add': {
+    				method: 'POST'
+    			},
+    			'del': {
+    				method: 'DELETE'
+    			},
+    			'update': {
+    				method: 'PUT'
+    			},
+    			'getAll': {
+    				method: 'GET',
+    				params: {
+    					action: 'getAll'
+    				}
+    			}
+    		}),
         };
     });
 });
