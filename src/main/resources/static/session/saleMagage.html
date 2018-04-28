@@ -1,0 +1,11 @@
+<div class="main-nav">
+	<uib-tabset active="curIndex">
+	    <uib-tab ng-repeat="page in pages" data-ng-click="changePage(page)"  heading="{{page}}">
+	    </uib-tab>
+	</uib-tabset>
+</div>
+
+
+<div class="page-content">
+	<div data-ui-view style="height:100%"></div>
+</div>

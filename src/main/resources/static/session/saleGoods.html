@@ -1,0 +1,40 @@
+<div class="system-role" id="slae-goods">
+	<div class="table-ctrl">
+		<button type="button" class="btn btn-info" data-ng-click="openAddModal()">新增销售</button>
+	</div>
+	<div class="table-content">
+			<table class="table table-bordered table-hover" style="display: flex;width: 100%;flex-direction: column;max-height: 90%;overflow-x: scroll;">
+	 			<thead class="fixedThead" style="width: 100%;height: 40px;">
+	 				<tr style="display: flex;flex-grow: 1;background-color: rgb(255, 255, 255);">
+	 					<th style="min-width: 300px; text-align: center;">商品id</th>
+	 					<th style="min-width: 200px;text-align: center;">操作</th>
+	 					<th style="min-width: 200px;text-align: center;">商品名称</th>
+	 					<th style="min-width: 200px;text-align: center;">商品生产商</th>
+	 					<th style="min-width: 200px;text-align: center;">供应商</th>
+	 					<th style="min-width: 200px;text-align: center;">售价（元）</th>
+	 					<th style="min-width: 200px;text-align: center;">数量</th>
+	 					<th style="min-width: 200px;text-align: center;">总价（元）</th>
+	 					<th style="min-width: 200px;text-align: center;">销售员</th>
+	 					<th style="min-width: 200px;text-align: center;">销售时间</th>
+	 				</tr>
+	 			</thead>
+	 			<tbody class="scrollTbody">
+	 				<tr data-ng-repeat="sale in sales" style="display: flex;min-height: 40px">
+	 					<td style="min-width: 300px;text-align: center;">{{sale.goodId}}</td>
+	 					<td style="min-width: 200px;text-align: center;"><a href="javascript:void(0)" data-ng-click="modify($index)"><span>修改</span></a></td>
+	 					<td style="min-width: 200px;text-align: center;">{{sale.goodName}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{sale.creater}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{sale.provider}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{sale.definePrice}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{sale.count}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{sale.count*sale.definePrice}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{sale.saleman}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{sale.time | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+	 				</tr>
+	 			</tbody>
+			</table>
+		<div class="table-footer">
+			<ul uib-pagination boundary-links="true" total-items="users" ng-model="currentPage" class="pagination-sm" previous-text="上一页" next-text="下一页" first-text="首页" last-text="尾页"></ul>
+		</div>
+	</div>
+</div>

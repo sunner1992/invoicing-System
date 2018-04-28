@@ -90,6 +90,12 @@ define(function (require) {
                 controllerUrl: 'session/saleGoods',
                 controller: 'saleGoodsController'
             })
+            .state('home.saleMagage.definePrice', {
+                url: '/definePrice',
+                templateUrl: 'session/definePrice.html',
+                controllerUrl: 'session/definePrice',
+                controller: 'definePriceController'
+            })
             .state('home.saleMagage.back', {
                 url: '/back',
                 templateUrl: 'session/saleBack.html',
@@ -101,12 +107,6 @@ define(function (require) {
                 templateUrl: 'session/storage.html',
                 controllerUrl: 'session/storage',
                 controller: 'storageController'
-            })
-            .state('home.saleMagage.record', {
-                url: '/record',
-                templateUrl: 'session/saleRecord.html',
-                controllerUrl: 'session/saleRecord',
-                controller: 'saleRecordController'
             })
             //统计分析部分
             .state('home.statisticManage', {

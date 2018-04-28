@@ -131,6 +131,40 @@ define(function (require) {
     				}
     			}
     		}),
+    		definePrice: $resource('./definePrice/:action', {}, {
+    			'add': {
+    				method: 'POST'
+    			},
+    			'del': {
+    				method: 'DELETE'
+    			},
+    			'update': {
+    				method: 'PUT'
+    			},
+    			'getAll': {
+    				method: 'GET',
+    				params: {
+    					action: 'getAll'
+    				}
+    			}
+    		}),
+    		sale: $resource('./sale/:action', {}, {
+    			'add': {
+    				method: 'POST'
+    			},
+    			'del': {
+    				method: 'DELETE'
+    			},
+    			'update': {
+    				method: 'PUT'
+    			},
+    			'getAll': {
+    				method: 'GET',
+    				params: {
+    					action: 'getAll'
+    				}
+    			}
+    		}),
         };
     });
 });

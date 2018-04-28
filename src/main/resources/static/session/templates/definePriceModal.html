@@ -1,0 +1,21 @@
+<div class="my-modal" style="padding: 50px">
+	<div class="my-modal-header">
+		<h1>定义售价</h1>
+	</div>
+	<div class="my-modal-content" data-ng-show="!isModify">
+		<div class="form-group">
+		    <label for="roleName">商品ID</label>
+		    <input type="text" class="form-control" data-ng-model="define.goodId">
+	    </div>
+	</div>
+	<div class="my-modal-content">
+		<div class="form-group">
+		    <label for="roleName">商品售价</label>
+		    <input type="text" class="form-control" data-ng-model="define.salePrice">
+	    </div>
+	</div>
+	<div class="my-modal-footer" style="display: flex; justify-content: flex-end;">
+		<button type="button" class="btn btn-info" data-ng-click="add()" style="margin-left: 20px">确定</button>
+      	<button type="button" class="btn btn-info" data-ng-click="cancel()" style="margin-left: 20px">取消</button>
+	</div>
+</div>

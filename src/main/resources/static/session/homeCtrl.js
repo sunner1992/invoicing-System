@@ -34,7 +34,8 @@ define(function (require) {
 					$state.go('home.purchaseManage.provider');
 					break;
 				case '销售管理':
-					$state.go('')
+					$state.go('home.saleMagage.goods');
+					break
 			}
 		}
 		
