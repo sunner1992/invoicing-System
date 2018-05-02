@@ -2,7 +2,7 @@ package com.sunjiamin.invoice.model;
 
 import java.util.Date;
 
-public class ShowPurchaseBack {
+public class ShowPurchaseBack{
 
 	private int id;
 	private String goodId;

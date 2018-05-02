@@ -165,6 +165,24 @@ define(function (require) {
     				}
     			}
     		}),
+    		saleBack: $resource('./sale/:action', {}, {
+    			'add': {
+    				method: 'POST'
+    			},
+    			'del': {
+    				method: 'DELETE'
+    			},
+    			'update': {
+    				method: 'PUT'
+    			},
+    			'getAll': {
+    				method: 'GET',
+    				params: {
+    					action: 'getAll'
+    				}
+    			}
+    		}),
+    		
         };
     });
 });

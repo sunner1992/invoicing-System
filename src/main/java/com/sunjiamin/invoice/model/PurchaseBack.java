@@ -1,5 +1,6 @@
 package com.sunjiamin.invoice.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,7 +11,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "purchaseBack")
-public class PurchaseBack {
+public class PurchaseBack implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "id")
 	@GeneratedValue
