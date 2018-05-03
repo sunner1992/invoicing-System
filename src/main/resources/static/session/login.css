@@ -1,0 +1,18 @@
+.login{
+	display: flex;
+	position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+	background: linear-gradient(0deg, #0b4182 1%, #1e88e5 100%);
+	flex-direction: row;
+    justify-content: center;
+}
+.login form{
+	margin-top: 200px;
+    height: 450px;
+    background-color: white;
+    padding: 50px;
+    border-radius: 4px;
+}

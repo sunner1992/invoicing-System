@@ -3,8 +3,16 @@ define(function (require) {
 
     app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise('/home/systemManage/role');
+//        $urlRouterProvider.otherwise('/login');
 
         $stateProvider
+	        .state('login', {
+	        	url: '/login',
+	            templateUrl: 'session/login.html',
+	            // new attribute for ajax load controller
+	            controllerUrl: 'session/login',
+	            controller: 'loginController'
+	        })
             .state('home', {
             	url: '/home',
                 templateUrl: 'session/home.html',
