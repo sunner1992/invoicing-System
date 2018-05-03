@@ -19,7 +19,8 @@ define(function (require) {
         // }
 
 
-		$css.add('session/definePrice.css');
+//		$css.add('session/definePrice.css');
+		$css.bind('session/definePrice.css', $scope);
 		
 		$scope.showDefines = [];
 

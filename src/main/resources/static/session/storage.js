@@ -19,11 +19,10 @@ define(function (require) {
 		// };
 		//上面的商品样例是存的和显示的组合
 
-		$css.add('session/storage.css');
+//		$css.add('session/storage.css');
+		$css.bind('session/storage.css', $scope);
 		
 		$scope.purchases = [];
-
-        //TODO 刷新的时候Tab会跑到第一个导致tab和实际的页对不上
 
 		$scope.init = function(){
 			//已有用户的查询

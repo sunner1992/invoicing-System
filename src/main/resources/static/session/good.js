@@ -17,7 +17,7 @@ define(function (require) {
 		// 	providerId: ''//供应商id
 		// };
 
-		$css.add('session/good.css');
+		$css.bind('session/good.css', $scope);
 		
 		$scope.goods = [];
 

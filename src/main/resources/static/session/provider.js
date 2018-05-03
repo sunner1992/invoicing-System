@@ -13,7 +13,7 @@ define(function (require) {
 		// 	address: '',//公司地址
 		// };
 
-		$css.add('session/provider.css');
+		$css.bind('session/provider.css', $scope);
 		
 		$scope.providers = [];
 

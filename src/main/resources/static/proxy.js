@@ -101,9 +101,6 @@ define(function (require) {
     			'add': {
     				method: 'POST'
     			},
-    			'del': {
-    				method: 'DELETE'
-    			},
     			'update': {
     				method: 'PUT'
     			},
@@ -117,9 +114,6 @@ define(function (require) {
     		purchaseBack: $resource('./purchaseBack/:action', {}, {
     			'add': {
     				method: 'POST'
-    			},
-    			'del': {
-    				method: 'DELETE'
     			},
     			'update': {
     				method: 'PUT'
@@ -152,9 +146,6 @@ define(function (require) {
     			'add': {
     				method: 'POST'
     			},
-    			'del': {
-    				method: 'DELETE'
-    			},
     			'update': {
     				method: 'PUT'
     			},
@@ -165,13 +156,10 @@ define(function (require) {
     				}
     			}
     		}),
-    		saleBack: $resource('./sale/:action', {}, {
+    		saleBack: $resource('./saleBack/:action', {}, {
     			'add': {
     				method: 'POST'
     			},
-    			'del': {
-    				method: 'DELETE'
-    			},
     			'update': {
     				method: 'PUT'
     			},
@@ -182,7 +170,14 @@ define(function (require) {
     				}
     			}
     		}),
-    		
+    		storage: $resource('./storage/:action', {}, {
+    			'getAll': {
+    				method: 'GET',
+    				params: {
+    					action: 'getAll'
+    				}
+    			}
+    		}),
         };
     });
 });

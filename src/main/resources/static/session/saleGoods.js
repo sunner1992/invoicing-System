@@ -24,7 +24,8 @@ define(function (require) {
     	//  saleman: '',
     	// }
 
-		$css.add('session/saleGoods.css');
+//		$css.add('session/saleGoods.css');
+		$css.bind('session/saleGoods.css', $scope);
 		
 		$scope.sales = [];
 

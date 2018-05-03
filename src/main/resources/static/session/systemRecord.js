@@ -8,7 +8,7 @@ define(function (require) {
         // shortcut to get angular injected service.
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
-		$css.add('session/systemRecord.css');
+		$css.bind('session/systemRecord.css', $scope);
 		
 		$scope.roles = [];
 

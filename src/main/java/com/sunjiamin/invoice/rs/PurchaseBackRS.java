@@ -1,19 +1,17 @@
 package com.sunjiamin.invoice.rs;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.sunjiamin.invoice.model.PurchaseBack;
 import com.sunjiamin.invoice.model.Result;
 import com.sunjiamin.invoice.model.ShowPurchaseBack;
 import com.sunjiamin.invoice.repository.PurchaseBackRepository;
 import com.sunjiamin.invoice.service.PurchaseBackService;
+import com.sunjiamin.invoice.service.StorageService;
 
 @RestController
 @RequestMapping(value = "/purchaseBack")
@@ -25,22 +23,26 @@ public class PurchaseBackRS {
 	@Autowired
 	private PurchaseBackRepository _purchaseBackRepository;
 
-	@RequestMapping(method = RequestMethod.POST)
-	public void add(@RequestBody PurchaseBack PurchaseBack) {
-		// TODO 去更改库存
-		_purchaseBackRepository.save(PurchaseBack);
-	}
+	@Autowired
+	private StorageService _storageService;
 
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void delete(@RequestParam int id) {
-		_purchaseBackRepository.deleteById(id);
+	@RequestMapping(method = RequestMethod.POST)
+	public void add(@RequestBody PurchaseBack purchaseBack) {
+		_purchaseBackRepository.save(purchaseBack);
+		_storageService.subtract(purchaseBack.getGoodId(), purchaseBack.getCount());
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public void update(@RequestBody PurchaseBack PurchaseBack) {
-		// TODO 更改库存
+		int oldCount = _purchaseBackRepository.findById(PurchaseBack.getId()).get().getCount();
+		int newCount = PurchaseBack.getCount();
 		_purchaseBackRepository.deleteById(PurchaseBack.getId());
 		_purchaseBackRepository.save(PurchaseBack);
+		if (newCount > oldCount) {
+			_storageService.add(PurchaseBack.getGoodId(), newCount - oldCount);
+		} else {
+			_storageService.subtract(PurchaseBack.getGoodId(), oldCount - newCount);
+		}
 	}
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)

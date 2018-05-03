@@ -14,7 +14,7 @@ define(function (require) {
 		// 	count: ''//退货数量
 		// };
 
-		$css.add('session/purchaseBack.css');
+		$css.bind('session/purchaseBack.css', $scope);
 		
 		$scope.purchaseBacks = [];
 

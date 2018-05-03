@@ -24,7 +24,7 @@ public class Purchase implements Serializable {
 	@Column(name = "price")
 	private double price;
 	@Column(name = "count")
-	private double count;
+	private int count;
 	@Column(name = "totalPrice")
 	private double totalPrice;
 	@Column(name = "time")
@@ -62,11 +62,11 @@ public class Purchase implements Serializable {
 		this.price = price;
 	}
 
-	public double getCount() {
+	public int getCount() {
 		return count;
 	}
 
-	public void setCount(double count) {
+	public void setCount(int count) {
 		this.count = count;
 	}
 

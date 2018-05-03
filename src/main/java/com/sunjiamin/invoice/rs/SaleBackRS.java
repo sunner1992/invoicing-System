@@ -5,39 +5,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.sunjiamin.invoice.model.Result;
 import com.sunjiamin.invoice.model.SaleBack;
 import com.sunjiamin.invoice.model.ShowSaleBack;
 import com.sunjiamin.invoice.repository.SaleBackRepository;
 import com.sunjiamin.invoice.service.SaleBackService;
+import com.sunjiamin.invoice.service.StorageService;
 
 @RestController
 @RequestMapping(value = "/saleBack")
 public class SaleBackRS {
 
-	//本部分依旧缺少对于库存的操作
+	// 本部分依旧缺少对于库存的操作
 	@Autowired
 	private SaleBackService _saleBackService;
 
 	@Autowired
 	private SaleBackRepository _saleBackRepository;
 
+	@Autowired
+	private StorageService _storageService;
+
 	@RequestMapping(method = RequestMethod.POST)
 	public void add(@RequestBody SaleBack saleBack) {
 		_saleBackRepository.save(saleBack);
-	}
-
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void delete(@RequestParam int id) {
-		_saleBackRepository.deleteById(id);
+		int count = saleBack.getCount();
+		_storageService.add(saleBack.getGoodId(), count);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public void update(@RequestBody SaleBack saleBack) {
+		int oldCount = _saleBackRepository.findById(saleBack.getId()).get().getCount();
+		int newCount = saleBack.getCount();
 		_saleBackRepository.deleteById(saleBack.getId());
 		_saleBackRepository.save(saleBack);
+		if (newCount > oldCount) {
+			_storageService.add(saleBack.getGoodId(), newCount - oldCount);
+		} else {
+			_storageService.subtract(saleBack.getGoodId(), oldCount - newCount);
+		}
 	}
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)

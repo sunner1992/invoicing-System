@@ -9,9 +9,7 @@ define(function (require) {
         // shortcut to get angular injected service.
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
-		$css.add('session/role.css');
-		//因为这一级的切换时tab加载的css是累加，导致了样式乱掉问题
-		$css.remove(['session/user.css']);
+		$css.bind('session/role.css', $scope);
 		
 		$scope.roles = [];
         console.log($stateParams)

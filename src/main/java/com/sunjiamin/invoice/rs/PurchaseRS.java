@@ -16,6 +16,7 @@ import com.sunjiamin.invoice.model.Result;
 import com.sunjiamin.invoice.model.ShowPurchase;
 import com.sunjiamin.invoice.repository.PurchaseRepository;
 import com.sunjiamin.invoice.service.PruchaseService;
+import com.sunjiamin.invoice.service.StorageService;
 
 @RestController
 @RequestMapping(value = "/purchase")
@@ -29,22 +30,27 @@ public class PurchaseRS {
 	@Autowired
 	private PruchaseService _pruchaseService;
 
+	@Autowired
+	private StorageService _storageService;
+
 	@RequestMapping(method = RequestMethod.POST)
 	public void add(@RequestBody Purchase purchase) {
 		_purchaseRepository.save(purchase);
-		//TODO　向库存添加
-	}
-
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void delete(@RequestParam int id) {
-		_purchaseRepository.deleteById(id);
+		_storageService.add(purchase.getGoodId(), purchase.getCount());
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public void update(@RequestBody Purchase purchase) {
-		//修改的时候要生成记录的，防止偷改
+		int oldCount = _purchaseRepository.findById(purchase.getId()).get().getCount();
+		int newCount = purchase.getCount();
+		// 修改的时候要生成记录的，防止偷改
 		_purchaseRepository.deleteById(purchase.getId());
 		_purchaseRepository.save(purchase);
+		if (newCount > oldCount) {
+			_storageService.add(purchase.getGoodId(), newCount - oldCount);
+		} else {
+			_storageService.subtract(purchase.getGoodId(), oldCount - newCount);
+		}
 	}
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)

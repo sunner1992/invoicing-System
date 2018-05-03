@@ -23,7 +23,8 @@ define(function (require) {
     	//  saleman: '',
     	// }
 
-		$css.add('session/saleBack.css');
+//		$css.add('session/saleBack.css');
+		$css.bind('session/saleBack.css', $scope);
 		
 		$scope.sales = [];
 

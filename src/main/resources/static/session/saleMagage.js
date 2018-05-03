@@ -3,7 +3,9 @@ define(function (require) {
 
     app.controller('saleMagageController', ['$scope', '$css', '$state', function ($scope, $css, $state) {
 
-		$css.add('session/saleMagage.css')
+		
+		// $css.add('session/saleMagage.css')
+		$css.bind('session/saleMagage.css', $scope);
 
 		$scope.pages = ['商品销售管理', '定价管理', '退货管理', '库存管理'];
 		$scope.pageCur = '商品销售管理';

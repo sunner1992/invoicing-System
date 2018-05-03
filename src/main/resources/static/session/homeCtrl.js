@@ -9,7 +9,7 @@ define(function (require) {
         // shortcut to get angular injected service.
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
-		$css.add('session/home.css');
+    	$css.bind('session/home.css', $scope);
 		
 		$scope.modules = [{
 				name: '系统管理'

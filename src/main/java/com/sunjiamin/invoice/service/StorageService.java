@@ -28,21 +28,31 @@ public class StorageService {
 	@Autowired
 	private DefinePriceRepository _definePriceRepository;
 
+	@Autowired
 	private ProviderService _providerService;
 
-	public void add(Storage storage) {
-		int count = storage.getCount();
-		int totalCount = _StorageRepository.findById(storage.getGoodId()).get().getCount();
-		int newcount = totalCount + count;
-		storage.setCount(newcount);
-		_StorageRepository.deleteById(storage.getGoodId());
-		_StorageRepository.save(storage);
+	public void add(String goodId, int count) {
+		if (!_StorageRepository.findById(goodId).isPresent()) {
+			Storage storage = new Storage();
+			storage.setCount(count);
+			storage.setGoodId(goodId);
+			_StorageRepository.save(storage);
+		} else {
+			int totalCount = _StorageRepository.findById(goodId).get().getCount();
+			int newcount = totalCount + count;
+			Storage storage = new Storage();
+			storage.setGoodId(goodId);
+			storage.setCount(newcount);
+			_StorageRepository.deleteById(storage.getGoodId());
+			_StorageRepository.save(storage);
+		}
 	}
 
-	public void subtract(Storage storage) {
-		int count = storage.getCount();
-		int totalCount = _StorageRepository.findById(storage.getGoodId()).get().getCount();
+	public void subtract(String goodId, int count) {
+		int totalCount = _StorageRepository.findById(goodId).get().getCount();
 		totalCount = totalCount - count;
+		Storage storage = new Storage();
+		storage.setGoodId(goodId);
 		storage.setCount(totalCount);
 		_StorageRepository.deleteById(storage.getGoodId());
 		_StorageRepository.save(storage);
@@ -64,4 +74,5 @@ public class StorageService {
 		}
 		return result;
 	}
+
 }

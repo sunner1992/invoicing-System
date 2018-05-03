@@ -12,7 +12,7 @@ define(function (require) {
 		// 	name: ''//类别名称
 		// };
 
-		$css.add('session/category.css');
+		$css.bind('session/category.css', $scope);
 		
 		$scope.categorys = [];
 

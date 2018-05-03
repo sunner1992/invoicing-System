@@ -14,6 +14,7 @@ import com.sunjiamin.invoice.model.Sale;
 import com.sunjiamin.invoice.model.ShowSale;
 import com.sunjiamin.invoice.repository.SaleRepository;
 import com.sunjiamin.invoice.service.SaleService;
+import com.sunjiamin.invoice.service.StorageService;
 
 @RestController
 @RequestMapping(value = "/sale")
@@ -25,22 +26,27 @@ public class SaleRS {
 	@Autowired
 	private SaleService _saleService;
 
-	//TODO 联动库存的操作
-	
+	@Autowired
+	private StorageService _storageService;
+
 	@RequestMapping(method = RequestMethod.POST)
 	public void add(@RequestBody Sale sale) {
 		_saleRepository.save(sale);
-	}
-
-	@RequestMapping(method = RequestMethod.DELETE)
-	public void delete(@RequestParam int id) {
-		_saleRepository.deleteById(id);
+		_storageService.subtract(sale.getGoodId(), sale.getCount());
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public void update(@RequestBody Sale sale) {
+		int oldCount = _saleRepository.findById(sale.getId()).get().getCount();
+		int newCount = sale.getCount();
+
 		_saleRepository.deleteById(sale.getId());
 		_saleRepository.save(sale);
+		if (newCount > oldCount) {
+			_storageService.subtract(sale.getGoodId(), newCount - oldCount);
+		} else {
+			_storageService.add(sale.getGoodId(), oldCount - newCount);
+		}
 	}
 
 	@RequestMapping(value = "/getAll", method = RequestMethod.GET)
