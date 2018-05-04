@@ -2,8 +2,8 @@ define(function (require) {
     var app = require('./app');
 
     app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/home/systemManage/role');
-//        $urlRouterProvider.otherwise('/login');
+//        $urlRouterProvider.otherwise('/home/systemManage/role');
+        $urlRouterProvider.otherwise('/login');
 
         $stateProvider
 	        .state('login', {

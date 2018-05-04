@@ -10,6 +10,9 @@ define(function (require) {
 //        var userServices = app.get('usersService');
 //        $scope.userList = usersService.list();
     	$css.bind('session/home.css', $scope);
+    	if($rootScope.session == null){
+    		$state.go('login');
+    	}
 		
 		$scope.modules = [{
 				name: '系统管理'

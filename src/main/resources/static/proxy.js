@@ -178,6 +178,14 @@ define(function (require) {
     				}
     			}
     		}),
+    		login: $resource('./login/:action', {}, {
+    			'in': {
+    				method: 'GET',
+    				params: {
+    					action: 'in'
+    				}
+    			}
+    		}),
         };
     });
 });
