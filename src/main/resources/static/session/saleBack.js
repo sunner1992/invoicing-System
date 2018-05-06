@@ -1,7 +1,7 @@
 define(function (require) {
     var app = require('../app');
 
-    app.controller('saleBackController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', function ($scope, $ngConfirm, $css, $uibModal, Proxy) {
+    app.controller('saleBackController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', '$rootScope', function ($scope, $ngConfirm, $css, $uibModal, Proxy, $rootScope) {
         
     	//基本和售货是一样的，暂时没有大改变
 
@@ -75,7 +75,7 @@ define(function (require) {
 		
 		$scope.init();
 
-    }]).controller('saleBackModalController',function ($uibModalInstance, $scope, index, sales, Proxy, init) {
+    }]).controller('saleBackModalController',function ($uibModalInstance, $scope, index, sales, Proxy, init, $rootScope) {
     	
 		$scope.sale = {
     		goodId: '',
@@ -102,8 +102,7 @@ define(function (require) {
 				})
 			}else{
 				$scope.sale.time = new Date();
-				//TODO 销售员ID
-				$scope.sale.salemanId = 'luliling'
+				$scope.sale.salemanId = $rootScope.session.username;
 				Proxy.saleBack.add($scope.sale,function success(resp){
 					init()
 				})

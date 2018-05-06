@@ -41,6 +41,9 @@ define(function (require) {
 					break
 			}
 		}
+		$scope.switchUser = function(){
+	    		$state.go('login');
+	    	}
 		
 		$rootScope.permissions = [{name:'角色管理', value:'systemManage.role'}, {name:'用户管理', value:'systemManage.user'},
 	    	 {name:'记录管理', value:'systemManage.record'}, {name:'供应商管理', value:'purchaseManage.provider'}, 
@@ -50,5 +53,4 @@ define(function (require) {
 	    	 {name:'销售记录', value:'saleMagage.record'}, {name:'采购分析', value:'statisticManage.purchase'}, {name:'销售分析', value:'statisticManage.sale'},
 	    	 {name:'盈利分析', value:'statisticManage.profit'}, {name:'库存分析', value:'statisticManage.storage'}]
     }]);
-
 });

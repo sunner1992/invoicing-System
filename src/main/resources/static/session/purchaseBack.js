@@ -79,6 +79,7 @@ define(function (require) {
   			goodId: '',//商品id
 			count: 0,//退货数量
 			time: '',//退货时间
+			//感觉需要加一个处理人的Id ,就是username
 		};
 	
 		$scope.init = function(){

@@ -18,11 +18,11 @@ define(function (require) {
 		$scope.login = function(){
 			$scope.info = ''
 
-			Proxy.login.in($scope.user, function success(resp){
+			Proxy.login.in($scope.user, function success(resp){//resp.data就是用户名
 				//TODO 应该是去有权限的第一个页面
 				if(resp.code == 200){
 					$state.go('home.systemManage.role');
-					$rootScope.session = {username:resp.data}
+					setSession(resp.data)
 				}else{
 					$scope.showErrorInfo = true;
 					$scope.info = resp.data;
@@ -30,6 +30,12 @@ define(function (require) {
 			}, function error(resp){
 				$scope.showErrorInfo = true;
 				$scope.info = resp.data;
+			})
+		}
+
+		var setSession = function(username){
+			Proxy.user.get({username: username}, function success(resp){
+				$rootScope.session = resp.data;
 			})
 		}
 

@@ -42,12 +42,12 @@ define(function (require) {
                 controllerUrl: 'session/user',
                 controller: 'userController'
             })
-            .state('home.systemManage.record', {
-                url: '/record',
-                templateUrl: 'session/systemRecord.html',
-                controllerUrl: 'session/systemRecord',
-                controller: 'systemRecordController'
-            })
+//            .state('home.systemManage.record', {
+//                url: '/record',
+//                templateUrl: 'session/systemRecord.html',
+//                controllerUrl: 'session/systemRecord',
+//                controller: 'systemRecordController'
+//            })
             //采购管理部分
             .state('home.purchaseManage', {
                 url: '/purchaseManage',

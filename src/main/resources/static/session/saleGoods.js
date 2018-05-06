@@ -4,7 +4,7 @@ define(function (require) {
     // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');
 
-    app.controller('saleGoodsController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', function ($scope, $ngConfirm, $css, $uibModal, Proxy) {
+    app.controller('saleGoodsController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', '$rootScope', function ($scope, $ngConfirm, $css, $uibModal, Proxy, $rootScope) {
         
     	// $scope.sale = {
     	// 	goodId: '',
@@ -77,7 +77,7 @@ define(function (require) {
 		
 		$scope.init();
 
-    }]).controller('saleGoodsModalController',function ($uibModalInstance, $scope, index, sales, Proxy, init) {
+    }]).controller('saleGoodsModalController',function ($uibModalInstance, $scope, index, sales, Proxy, init, $rootScope) {
     	
 		$scope.sale = {
     		goodId: '',
@@ -104,8 +104,7 @@ define(function (require) {
 				})
 			}else{
 				$scope.sale.time = new Date();
-				//TODO 销售员ID
-				$scope.sale.salemanId = 'luliling'
+				$scope.sale.salemanId = $rootScope.session.username;
 				Proxy.sale.add($scope.sale,function success(resp){
 					init()
 				})

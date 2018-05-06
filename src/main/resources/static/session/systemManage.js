@@ -10,8 +10,8 @@ define(function (require) {
 //        $scope.userList = usersService.list();
 		$css.bind('session/systemManage.css', $scope);
 
-		$scope.pages = ['角色管理', '用户管理', '记录管理'];
-
+//		$scope.pages = ['角色管理', '用户管理', '记录管理'];
+		$scope.pages = ['角色管理', '用户管理'];
 		$scope.init = function(){
 			$scope.curIndex = getCurPage();
 			console.log($scope.pageCur);
@@ -54,6 +54,10 @@ define(function (require) {
 		}
 
 		$scope.init();
+		
+		$scope.$watch('$state.current.name',function(newVal, oldVal){
+			$scope.init();
+		})
     }]);
 
 });

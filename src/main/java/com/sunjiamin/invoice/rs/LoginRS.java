@@ -48,7 +48,7 @@ public class LoginRS {
 		}
 		Optional<User> option = _userRepository.findById(username);
 		if (option.isPresent()) {
-			if (option.get().getPassword() == password) {
+			if (option.get().getPassword().equals(password)) {
 				HttpSession.setAttribute("username", username);
 				HttpSession.setAttribute("password", password);
 				return new Result<String>(200, "登录成功", username);

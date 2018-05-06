@@ -57,6 +57,10 @@ define(function (require) {
 		}
 		
 		$scope.init();
+		
+		$scope.$watch('$state.current.name',function(newVal, oldVal){
+			$scope.init();
+		})
     }]);
 
 });

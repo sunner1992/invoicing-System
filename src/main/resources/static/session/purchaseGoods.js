@@ -4,7 +4,7 @@ define(function (require) {
     // dynamic load services here or add into dependencies of ui-router state config
     // require('../services/usersService');
 
-    app.controller('purchaseGoodsController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', function ($scope, $ngConfirm, $css, $uibModal, Proxy) {
+    app.controller('purchaseGoodsController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', '$rootScope', function ($scope, $ngConfirm, $css, $uibModal, Proxy, $rootScope) {
         
         //商品样例
   //       $scope.good = {
@@ -83,7 +83,7 @@ define(function (require) {
 		}
 		$scope.init();
 
-    }]).controller('purchaseGoodsModalController',function ($uibModalInstance, $scope, index, purchases, Proxy, init) {
+    }]).controller('purchaseGoodsModalController',function ($uibModalInstance, $scope, index, purchases, Proxy, init, $rootScope) {
     	
 		$scope.purchase = {
 			goodId: '',//商品id
@@ -93,7 +93,6 @@ define(function (require) {
 			time: '',//采购时间
 			buyerId: '',//采购员id
 		};
-		//TODO 修改的时候id 是不能改的
 
 		//采购员id就是用户的ID
 		$scope.init = function(){
@@ -103,7 +102,8 @@ define(function (require) {
 				$scope.purchase.price = purchases[index].price;
 				$scope.purchase.count = purchases[index].count;
 				$scope.purchase.time = purchases[index].time;
-				$scope.purchase.buyerId = 'luliling';
+				$scope.purchase.buyerId = $rootScope.session.username;
+				// $scope.purchase.buyerId = 'luliling';
 			}
 		}
 		//修改和添加为两个方法，修改的时候页面只是数据变
@@ -117,7 +117,7 @@ define(function (require) {
 				})
 			}else{
 				$scope.purchase.time = new Date();
-				$scope.purchase.buyerId = 'luliling';
+				$scope.purchase.buyerId = $rootScope.session.username;
 				Proxy.purchase.add($scope.purchase,function success(resp){
 					purchases.push($scope.purchase);
 					init()

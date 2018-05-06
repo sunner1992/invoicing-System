@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,9 @@ public class UserRS {
 
 	@Autowired
 	private UserRepository _userRepository;
+
+	@Value("${invoice.admin.username}")
+	private String defaultUsername;
 
 	@RequestMapping(method = { RequestMethod.POST })
 	public Result<User> add(@RequestBody User user) {
@@ -55,5 +59,16 @@ public class UserRS {
 	public void deleteByUsername(@RequestParam String username) {
 		_userRepository.deleteById(username);
 		logger.debug("删除用户--> id:" + username);
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public Result<User> getByUsername(@RequestParam String username) {
+		if (defaultUsername.equals(username)) {
+			User user = new User();
+			user.setName("系统默认用户");
+			user.setUsername(defaultUsername);
+			return new Result<User>(200, "查询用户成功", user);
+		}
+		return new Result<User>(200, "查询用户成功", _userRepository.findById(username).get());
 	}
 }

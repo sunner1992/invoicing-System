@@ -97,7 +97,7 @@ define(function (require) {
     	 {name:'盈利分析', value:'statisticManage.profit'}, {name:'库存分析', value:'statisticManage.storage'}]
     	$scope.role = {
     		id:'',
-			name: '',
+		name: '',
     		createTime: null,//实际添加时赋值
     		permissions: ''
     	};
