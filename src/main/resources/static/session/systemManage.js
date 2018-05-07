@@ -1,56 +1,42 @@
 define(function (require) {
     var app = require('../app');
 
-    // dynamic load services here or add into dependencies of ui-router state config
-    // require('../services/usersService');
-
-    app.controller('systemManageController', ['$scope', '$css', '$state', function ($scope, $css, $state) {
-        // shortcut to get angular injected service.
-//        var userServices = app.get('usersService');
-//        $scope.userList = usersService.list();
+    app.controller('systemManageController', ['$scope', '$css', '$state', '$rootScope', function ($scope, $css, $state, $rootScope) {
 		$css.bind('session/systemManage.css', $scope);
 
-//		$scope.pages = ['角色管理', '用户管理', '记录管理'];
-		$scope.pages = ['角色管理', '用户管理'];
+		/**
+		例子 $rootScope.permissions = [{name:'系统管理',pages:[{name:'角色管理':state:'home.systemManage.role'},{name:'用户管理':state:'home.systemManage.user'}]}]
+		**/
+		$scope.pages = [];
+
+		var initPages = function(){
+			angular.forEach($rootScope.permissions,function(data, index){
+				if(data.name == '系统管理'){
+					$scope.pages = data.pages;
+				}
+			})
+		}
+
 		$scope.init = function(){
 			$scope.curIndex = getCurPage();
+			initPages();
 			console.log($scope.pageCur);
 		}
 
 		$scope.changePage = function(page){
-			if($scope.pageCur == page){
-				return
-			}else{
-				$scope.pageCur = page;
-			}
-			console.log($scope.pageCur);
-			switch(page){
-				case '角色管理':
-					$state.go('home.systemManage.role');
-					break;
-				case '用户管理':
-					$state.go('home.systemManage.user');
-					break;
-				case '记录管理':
-					$state.go('home.systemManage.record');
-					break;
-			}
+			$state.go(page.state);
 		}
 
 		var getCurPage = function(){
 			var state = $state.current.name;
 			console.log(state)
-			switch(state){
-				case 'home.systemManage.role':
-					$scope.pageCur = '角色管理';
-					return 0
-				case 'home.systemManage.user':
-					$scope.pageCur = '用户管理';
-					return 1
-				case 'home.systemManage.record':
-					$scope.pageCur = '记录管理';
-					return 2
-			}
+			var currentNum = 0
+			angular.forEach($scope.pages,function(page, index){
+				if(state == page.state){
+					currentNum = index;
+				}
+			})
+			return currentNum;
 		}
 
 		$scope.init();

@@ -1,14 +1,8 @@
 define(function (require) {
     var app = require('../app');
 
-    // dynamic load services here or add into dependencies of ui-router state config
-    // require('../services/usersService');
-
     app.controller('roleController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'uuid2', 'Proxy', '$stateParams', '$state',
         function ($scope, $ngConfirm, $css, $uibModal, uuid2, Proxy, $stateParams, $state) {
-        // shortcut to get angular injected service.
-//        var userServices = app.get('usersService');
-//        $scope.userList = usersService.list();
 		$css.bind('session/role.css', $scope);
 		
 		$scope.roles = [];
@@ -25,14 +19,8 @@ define(function (require) {
 		//打开添加角色页面
 		$scope.openAddModal = function () {
 		    var modalInstance = $uibModal.open({
-		      // animation: $ctrl.animationsEnabled,
-		      // ariaLabelledBy: 'modal-title',
-		      // ariaDescribedBy: 'modal-body',
 		      templateUrl: 'session/templates/roleModal.html',
 		      controller: 'roleModalController',
-		      // controllerAs: '$ctrl',
-		      // size: size,
-		      // appendTo: parentElem,
 		      resolve: {
 		      	index: function(){
 		      		return null;
@@ -42,12 +30,6 @@ define(function (require) {
 		        }
 		      }
 		    });
-
-		    // modalInstance.result.then(function (selectedItem) {
-		    //   $ctrl.selected = selectedItem;
-		    // }, function () {
-		    //   $log.info('Modal dismissed at: ' + new Date());
-		    // });
 		};
 
 		$scope.save = function(){
@@ -56,14 +38,8 @@ define(function (require) {
 
 		$scope.modify = function(index){
 			var modalInstance = $uibModal.open({
-		      // animation: $ctrl.animationsEnabled,
-		      // ariaLabelledBy: 'modal-title',
-		      // ariaDescribedBy: 'modal-body',
 		      templateUrl: 'session/templates/roleModal.html',
 		      controller: 'roleModalController',
-		      // controllerAs: '$ctrl',
-		      // size: size,
-		      // appendTo: parentElem,
 		      resolve: {
 		      	index: function(){
 		      		return index;
@@ -89,15 +65,14 @@ define(function (require) {
     }]).controller('roleModalController',function ($uibModalInstance, $scope, index, roles, uuid2, Proxy) {
     	//添加user的Modal控制器
     	$scope.permissions = [{name:'角色管理', value:'systemManage.role'}, {name:'用户管理', value:'systemManage.user'},
-    	 {name:'记录管理', value:'systemManage.record'}, {name:'供应商管理', value:'purchaseManage.provider'}, 
-    	 {name:'采购商品管理', value:'purchaseManage.goods'}, {name:'商品类别管理', value:'purchaseManage.actegory'}, 
-    	 {name:'退货管理', value:'purchaseManage.back'}, {name:'采购记录管理', value:'purchaseManage.record'}, 
-    	 {name:'销售管理', value:'saleMagage.goods'}, {name:'退货管理', value:'saleMagage.back'}, {name:'库存管理', value:'saleMagage.storage'},
-    	 {name:'销售记录', value:'saleMagage.record'}, {name:'采购分析', value:'statisticManage.purchase'}, {name:'销售分析', value:'statisticManage.sale'},
-    	 {name:'盈利分析', value:'statisticManage.profit'}, {name:'库存分析', value:'statisticManage.storage'}]
+    	 {name:'供应商管理', value:'purchaseManage.provider'}, 
+    	 {name:'采购管理', value:'purchaseManage.goods'}, {name:'商品类别管理', value:'purchaseManage.actegory'}, 
+    	 {name:'商品管理', value:'purchaseManage.back'}, {name:'采购退货', value:'purchaseManage.record'}, 
+    	 {name:'商品销售管理', value:'home.saleMagage.goods'}, {name:'定价管理', value:'home.saleMagage.definePrice'}, {name:'库存管理', value:'home.saleMagage.storage'},
+    	 {name:'销售退货', value:'home.saleMagage.back'}]
     	$scope.role = {
     		id:'',
-		name: '',
+            name: '',
     		createTime: null,//实际添加时赋值
     		permissions: ''
     	};
@@ -128,8 +103,8 @@ define(function (require) {
                     roles[index].permissions = $scope.role.permissions;
                 })
     		}else{
-               $scope.role.createTime = new Date().format('yyyy-MM-dd');
-               Proxy.role.add($scope.role, function success(resp){
+                $scope.role.createTime = new Date().format('yyyy-MM-dd');
+                Proxy.role.add($scope.role, function success(resp){
                     roles.push($scope.role);
                 })
             }

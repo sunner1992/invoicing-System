@@ -82,9 +82,15 @@ define(function (require) {
 		};
 	
         //TODO 要查出来
-        $scope.roles = [{name:'销售员'},{name:'采购员'},{name:'管理员'}];
+        $scope.roles = [];
 	
+		var initRoles = function(){
+			Proxy.role.getAll(function success(resp){
+				$scope.roles = resp.data;
+			})
+		}
 		$scope.init = function(){
+			initRoles();
 			if(index != null){
 				$scope.user = angular.copy(users[index]);
 			}
