@@ -69,7 +69,7 @@ define(function (require) {
     	 {name:'采购管理', value:'purchaseManage.goods'}, {name:'商品类别管理', value:'purchaseManage.actegory'}, 
     	 {name:'商品管理', value:'purchaseManage.back'}, {name:'采购退货', value:'purchaseManage.record'}, 
     	 {name:'商品销售管理', value:'home.saleMagage.goods'}, {name:'定价管理', value:'home.saleMagage.definePrice'}, {name:'库存管理', value:'home.saleMagage.storage'},
-    	 {name:'销售退货', value:'home.saleMagage.back'}]
+    	 {name:'销售退货', value:'home.saleMagage.back'},{name:'采购分析'},{name:'销售分析'},{name:'商品分析'},{name:'库存分析'}]
     	$scope.role = {
     		id:'',
             name: '',

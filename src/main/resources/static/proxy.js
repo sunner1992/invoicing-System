@@ -186,6 +186,38 @@ define(function (require) {
     				}
     			}
     		}),
+    		purchaseStatistic: $resource('./purchase_statistic/:action', {}, {
+    			'getMostPurchase': {
+    				method: 'GET',
+    				params: {
+    					action: 'getMostPurchase'
+    				}
+    			}
+    		}),
+    		saleStatistic: $resource('./sale_statistic/:action', {}, {
+    			'getMostSales': {
+    				method: 'GET',
+    				params: {
+    					action: 'getMostSales'
+    				}
+    			}
+    		}),
+    		storageStatistic: $resource('./storage_statistic/:action', {}, {
+    			'getMostStorages': {
+    				method: 'GET',
+    				params: {
+    					action: 'getMostStorages'
+    				}
+    			}
+    		}),
+    		goodStatistic: $resource('./good_statistic/:action', {}, {
+    			'getGoodCountsOfCategory': {
+    				method: 'GET',
+    				params: {
+    					action: 'getGoodCountsOfCategory'
+    				}
+    			}
+    		}),
         };
     });
 });

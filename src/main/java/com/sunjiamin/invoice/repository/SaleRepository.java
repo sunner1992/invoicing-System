@@ -1,8 +1,15 @@
 package com.sunjiamin.invoice.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import com.sunjiamin.invoice.model.Sale;
 
 public interface SaleRepository extends JpaRepository<Sale, Integer> {
-
+	
+	@Query(value = "select good_id from sale group by good_id order by sum(count) desc limit 0,10", nativeQuery = true)
+	List<String> getGoodIdsOfMostSumCount();
+	
+	@Query(value = "select sum(count) from sale where good_id = ?1", nativeQuery = true)
+	int getSumCountByGood_id(String good_id);
 }

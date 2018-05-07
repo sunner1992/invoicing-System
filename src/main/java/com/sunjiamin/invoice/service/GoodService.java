@@ -55,6 +55,14 @@ public class GoodService {
 		}
 		return showGoods;
 	}
+	
+	public ShowGood getShowGoodById(String id) {
+		Good good = _goodRepository.findById(id).get();
+		String provider = _providerRepository.findById(good.getProviderId()).get().getContact();
+		String category = _categoryRepository.findById(good.getCategoryId()).get().getName();
+		ShowGood showGood = convertGoodToShowGood(good, category, provider);
+		return showGood;
+	}
 
 	public Good convertShowGoodToGood(ShowGood showGood) {
 		Good good = new Good();

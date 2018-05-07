@@ -116,7 +116,11 @@ define(function (require) {
 			'商品销售管理':'home.saleMagage.goods',
 			'定价管理':'home.saleMagage.definePrice',
 			'销售退货':'home.saleMagage.back',
-			'库存管理':'home.saleMagage.storage'
+			'库存管理':'home.saleMagage.storage',
+			'采购分析':'home.statisticManage.purchase',
+			'销售分析':'home.statisticManage.sale',
+			'商品分析':'home.statisticManage.good',
+			'库存分析':'home.statisticManage.storage'
 		}
 		
 		$scope.$watch('user',function(newValue, oldValue){

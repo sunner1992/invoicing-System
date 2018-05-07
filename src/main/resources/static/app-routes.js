@@ -135,11 +135,11 @@ define(function (require) {
                 controllerUrl: 'session/saleStatic',
                 controller: 'saleStaticController'
             })
-            .state('home.statisticManage.profit', {
+            .state('home.statisticManage.good', {
                 url: '/profit',
-                templateUrl: 'session/profitStatic.html',
-                controllerUrl: 'session/profitStatic',
-                controller: 'profitStaticController'
+                templateUrl: 'session/goodStatic.html',
+                controllerUrl: 'session/goodStatic',
+                controller: 'goodStaticController'
             })
             .state('home.statisticManage.storage', {
                 url: '/storage',
