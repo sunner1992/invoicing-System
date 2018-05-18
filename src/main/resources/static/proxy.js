@@ -41,6 +41,12 @@ define(function (require) {
     			},
     			'get': {
     				method: 'GET',
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
+    				}
     			}
     		}),
     		provider: $resource('./provider/:action', {}, {

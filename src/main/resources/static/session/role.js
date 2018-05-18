@@ -86,6 +86,7 @@ define(function (require) {
     	}
 
     	$scope.add = function(){
+            $scope.role.permissions = '';
     		angular.forEach($scope.permissions, function(data, index){
     			if(data.checked == true && $scope.role.permissions.indexOf(data.name) < 0){
     				$scope.role.permissions = $scope.role.permissions + data.name + ',';
@@ -96,7 +97,6 @@ define(function (require) {
     		}
     		
     		if(index != null){
-                //修改
                 Proxy.role.update({name: roles[index].name},$scope.role, function success(resp){
                     console.log(resp)
                     roles[index].name = $scope.role.name;

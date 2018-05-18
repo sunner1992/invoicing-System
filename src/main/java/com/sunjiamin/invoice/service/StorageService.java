@@ -68,7 +68,6 @@ public class StorageService {
 			showStorage.setCount(storage.getCount());
 			showStorage.setGoodId(good.getId());
 			showStorage.setGoodName(good.getName());
-			showStorage.setPrice(_definePriceRepository.findById(good.getId()).get().getSalePrice());
 			showStorage.setProvider(_providerService.getProviderNameByGoodId(good.getId()));
 			result.add(showStorage);
 		}

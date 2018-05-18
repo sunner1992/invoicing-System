@@ -12,14 +12,26 @@ define(function (require) {
 		
 		$scope.users = [];
 
-        //TODO 刷新的时候Tab会跑到第一个导致tab和实际的页对不上
+		$scope.page = {
+			totalCount: 0,
+			limit: 2,
+			currentPage: 1,
+			pageChanged:function(){
+				var param = {
+					page: this.currentPage,
+					limit: this.limit
+				}
+				//已有用户的查询
+				Proxy.user.getByPage(param, function success(resp){
+					console.log(resp);
+					$scope.users = resp.data.items;
+					$scope.page.totalCount = resp.data.totalCount;
+				})
+			}
+		}
 
 		$scope.init = function(){
-			//已有用户的查询
-			Proxy.user.getAll(function success(resp){
-				console.log(resp);
-				$scope.users = resp.data;
-			})
+			$scope.page.pageChanged();
 		}
 
 		//打开添加角色页面

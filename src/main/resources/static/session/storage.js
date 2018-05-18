@@ -14,12 +14,10 @@ define(function (require) {
 		// 	categoryId: ''//商品类别id
 		// 	provider: '',//供应商
 		// 	providerId: '',//供应商id
-		// 	price: 0,//单价
 		// 	count: o,//数量
 		// };
 		//上面的商品样例是存的和显示的组合
 
-//		$css.add('session/storage.css');
 		$css.bind('session/storage.css', $scope);
 		
 		$scope.purchases = [];

@@ -18,7 +18,7 @@
 	 			<tbody class="scrollTbody">
 	 				<tr data-ng-repeat="role in roles" style="display: flex;min-height: 40px">
 	 					<td style="min-width: 50px;text-align: center;">{{$index + 1}}</td>
-	 					<td style="min-width: 100px;text-align: center;"><a href="javascript:void(0)" data-ng-click="modify($index)"><span>修改</span></a>   <a href="javascript:void(0)" data-ng-click="deleteRole($index)"><span>删除</span></a></td>
+	 					<td style="min-width: 100px;text-align: center;"><a href="javascript:void(0)" data-ng-click="modify($index)"><span>修改</span></a></td>
 	 					<td style="min-width: 100px;text-align: center;">{{role.name}}</td>
 	 					<td style="min-width: 250px;text-align: center;">{{role.createTime | date:'yyyy-MM-dd'}}</td>
 	 					<td style="flex-grow: 1;text-align: center;">{{role.permissions}}</td>

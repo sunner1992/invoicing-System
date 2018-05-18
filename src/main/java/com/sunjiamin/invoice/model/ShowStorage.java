@@ -6,7 +6,6 @@ public class ShowStorage {
 	private String goodName;
 	private String category;
 	private String provider;
-	private double price;
 	private int count;
 	public String getGoodId() {
 		return goodId;
@@ -31,12 +30,6 @@ public class ShowStorage {
 	}
 	public void setProvider(String provider) {
 		this.provider = provider;
-	}
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) {
-		this.price = price;
 	}
 	public int getCount() {
 		return count;

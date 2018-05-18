@@ -1,11 +1,16 @@
 package com.sunjiamin.invoice.rs;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -70,5 +75,17 @@ public class UserRS {
 			return new Result<User>(200, "查询用户成功", user);
 		}
 		return new Result<User>(200, "查询用户成功", _userRepository.findById(username).get());
+	}
+
+	@Deprecated
+	@RequestMapping(value = "/getByPage", method = RequestMethod.GET)
+	public Result<Map<String, Object>> getByPage(@RequestParam int page, @RequestParam int limit) {
+		Pageable pageable = new PageRequest(page, limit);
+		Page<User> users = _userRepository.findAll(pageable);
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<User> us = users.getContent();
+		map.put("items", us);
+		map.put("totalCount", _userRepository.count());
+		return new Result<Map<String, Object>>(200, "分页查询成功", map);
 	}
 }
