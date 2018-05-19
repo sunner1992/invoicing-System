@@ -16,13 +16,26 @@ define(function (require) {
 		$css.bind('session/provider.css', $scope);
 		
 		$scope.providers = [];
+		
+		$scope.page = {
+			totalCount: 0,
+			currentPage: 1,
+			limit: 10,
+			changed: function(){
+				var param = {
+					page: this.currentPage,
+					limit: this.limit
+				}
+				Proxy.provider.getByPage(param, function success(resp){
+					$scope.providers = resp.data.items;
+					$scope.page.totalCount = resp.data.totalCount;
+				})
+			}
+		}
 
 		$scope.init = function(){
 			//已有用户的查询
-			Proxy.provider.getAll(function success(resp){
-				console.log(resp)
-				$scope.providers = resp.data;
-			})
+			$scope.page.changed();
 		}
 
 		//打开添加角色页面
@@ -35,7 +48,10 @@ define(function (require) {
 		      		return null;
 		      	},
 		        providers: function(){
-		        	return $scope.providers;
+		        		return $scope.providers;
+		        },
+		        mainInit: function(){
+		        		return $scope.init;
 		        }
 		      }
 		    });
@@ -52,11 +68,14 @@ define(function (require) {
 		      	},
 		        providers: function(){
 		        		return $scope.providers;
+		        },
+		        mainInit: function(){
+		        		return $scope.init();
 		        }
 		      }
 		    });
 		}
-		//TODO 实际删除+页面删除
+		
 		$scope.delete = function(index){
 			var p = $scope.providers[index]
 			Proxy.provider.del({id: p.id}, function success(resp){
@@ -66,7 +85,7 @@ define(function (require) {
 		}
 		$scope.init();
 
-    }]).controller('providerModalController',function ($uibModalInstance, $scope, index, providers, uuid2, Proxy) {
+    }]).controller('providerModalController',function ($uibModalInstance, $scope, index, providers, uuid2, Proxy, mainInit) {
     	
 		$scope.provider = {
          	id: '',//公司编号
@@ -86,17 +105,12 @@ define(function (require) {
 		$scope.add = function(){
 			if(index != null){
 				Proxy.provider.update($scope.provider, function success(){
-					providers[index].contact = $scope.provider.contact;
-					providers[index].phoneNum = $scope.provider.phoneNum;
-					providers[index].companyPhone = $scope.provider.companyPhone;
-					providers[index].company = $scope.provider.company;
-					providers[index].address = $scope.provider.address;
+					mainInit();
 				})
 			}else{
 				$scope.provider.id = uuid2.newuuid();
-				console.log($scope.provider);
 				Proxy.provider.add($scope.provider, function success(resp){
-					providers.push($scope.provider);
+					mainInit();
 				})
 			}
 			$uibModalInstance.close();

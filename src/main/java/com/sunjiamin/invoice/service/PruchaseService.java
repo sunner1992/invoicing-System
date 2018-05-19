@@ -3,6 +3,8 @@ package com.sunjiamin.invoice.service;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.sunjiamin.invoice.model.Purchase;
 import com.sunjiamin.invoice.model.ShowPurchase;
@@ -30,6 +32,18 @@ public class PruchaseService {
 
 	public List<ShowPurchase> getAll() {
 		List<Purchase> tmpPurchases = _purchaseRepository.findAll();
+		List<ShowPurchase> results = new ArrayList<ShowPurchase>();
+		for (Purchase purchase : tmpPurchases) {
+			ShowPurchase showPurchase = convetToShowPurchase(purchase);
+			results.add(showPurchase);
+		}
+		return results;
+	}
+	
+	@Deprecated
+	public List<ShowPurchase> getByPage(int page, int limit) {
+		Pageable pageable = new PageRequest(page - 1, limit);
+		List<Purchase> tmpPurchases= _purchaseRepository.findAll(pageable).getContent();
 		List<ShowPurchase> results = new ArrayList<ShowPurchase>();
 		for (Purchase purchase : tmpPurchases) {
 			ShowPurchase showPurchase = convetToShowPurchase(purchase);

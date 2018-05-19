@@ -28,13 +28,25 @@ define(function (require) {
 		$css.bind('session/saleGoods.css', $scope);
 		
 		$scope.sales = [];
+		
+		$scope.page = {
+				totalCount: 0,
+				currentPage: 1,
+				limit: 10,
+				changed: function(){
+					var param = {
+						page: this.currentPage,
+						limit: this.limit
+					}
+					Proxy.sale.getByPage(param, function success(resp){
+						$scope.sales = resp.data.items;
+						$scope.page.totalCount = resp.data.totalCount;
+					})
+				}
+			}
 
 		$scope.init = function(){
-			//已有用户的查询
-			Proxy.sale.getAll(function success(resp){
-				console.log(resp)
-				$scope.sales = resp.data;
-			})
+			$scope.page.changed();
 		}
 
 		//打开添加角色页面
@@ -47,10 +59,10 @@ define(function (require) {
 			      		return null;
 			      	},
 			        sales: function(){
-			        	return $scope.sales;
+			        		return $scope.sales;
 			        },
 			        init: function(){
-			        	return $scope.init;
+			        		return $scope.init;
 			        }
 			    }
 		    });
@@ -62,14 +74,13 @@ define(function (require) {
 		     	controller: 'saleGoodsModalController',
 		      	resolve: {
 			      	index: function(){
-	                    //TODO 
 			      		return index;
 			      	},
 			        sales: function(){
-		        		return $scope.sales;
+		        			return $scope.sales;
 			        },
 			        init: function(){
-			        	return $scope.init;
+			        		return $scope.init;
 			        }
 			    }
 		    });
@@ -80,11 +91,11 @@ define(function (require) {
     }]).controller('saleGoodsModalController',function ($uibModalInstance, $scope, index, sales, Proxy, init, $rootScope) {
     	
 		$scope.sale = {
-    		goodId: '',
-    		count: '',
-    		time: '',
-    		salemanId: ''
-    	}
+	    		goodId: '',
+	    		count: '',
+	    		time: '',
+	    		salemanId: ''
+	    	}
 
 		//采购员id就是用户的ID
 		$scope.init = function(){

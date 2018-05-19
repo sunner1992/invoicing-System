@@ -27,7 +27,7 @@
 	 			</tbody>
 			</table>
 			<div class="table-footer">
-				<ul uib-pagination boundary-links="true" total-items="users" ng-model="currentPage" class="pagination-sm" previous-text="上一页" next-text="下一页" first-text="首页" last-text="尾页"></ul>
+				<ul uib-pagination boundary-links="true" ng-change="page.changed()" total-items="page.totalCount" ng-model="page.currentPage" class="pagination-sm" previous-text="上一页" next-text="下一页" first-text="首页" last-text="尾页"></ul>
 			</div>
 	</div>
 </div>

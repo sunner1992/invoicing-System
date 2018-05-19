@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sunjiamin.invoice.model.Good;
@@ -24,9 +26,6 @@ public class StorageService {
 
 	@Autowired
 	private GoodRepository _goodRepository;
-
-	@Autowired
-	private DefinePriceRepository _definePriceRepository;
 
 	@Autowired
 	private ProviderService _providerService;
@@ -74,4 +73,21 @@ public class StorageService {
 		return result;
 	}
 
+	@Deprecated
+	public List<ShowStorage> getByPage(int page, int limit) {
+		List<ShowStorage> result = new ArrayList<ShowStorage>();
+		Pageable pageable = new PageRequest(page - 1, limit);
+		List<Storage> storages = _StorageRepository.findAll(pageable).getContent();
+		for (Storage storage : storages) {
+			ShowStorage showStorage = new ShowStorage();
+			Good good = _goodRepository.findById(storage.getGoodId()).get();
+			showStorage.setCategory(_categoryService.getCategoryNameByGoodId(good.getId()));
+			showStorage.setCount(storage.getCount());
+			showStorage.setGoodId(good.getId());
+			showStorage.setGoodName(good.getName());
+			showStorage.setProvider(_providerService.getProviderNameByGoodId(good.getId()));
+			result.add(showStorage);
+		}
+		return result;
+	}
 }

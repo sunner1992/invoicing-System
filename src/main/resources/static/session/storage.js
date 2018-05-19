@@ -20,14 +20,26 @@ define(function (require) {
 
 		$css.bind('session/storage.css', $scope);
 		
-		$scope.purchases = [];
+		$scope.storages = [];
+		
+		$scope.page = {
+				totalCount: 0,
+				currentPage: 1,
+				limit: 10,
+				changed: function(){
+					var param = {
+						page: this.currentPage,
+						limit: this.limit
+					}
+					Proxy.storage.getByPage(param, function success(resp){
+						$scope.storages = resp.data.items;
+						$scope.page.totalCount = resp.data.totalCount;
+					})
+				}
+			}
 
 		$scope.init = function(){
-			//已有用户的查询
-			Proxy.storage.getAll(function success(resp){
-				console.log(resp)
-				$scope.purchases = resp.data;
-			})
+			$scope.page.changed();
 		}
 
 		$scope.init();

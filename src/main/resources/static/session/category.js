@@ -15,13 +15,25 @@ define(function (require) {
 		$css.bind('session/category.css', $scope);
 		
 		$scope.categorys = [];
+		
+		$scope.page = {
+			totalCount: 0,
+			currentPage: 1,
+			limit: 10,
+			changed: function(){
+				var param = {
+					page: this.currentPage,
+					limit: this.limit
+				}
+				Proxy.category.getByPage(param, function success(resp){
+					$scope.categorys = resp.data.items;
+					$scope.page.totalCount = resp.data.totalCount;
+				})
+			}
+		}
 
 		$scope.init = function(){
-			//已有类别的查询
-			Proxy.category.getAll(function success(resp){
-				$scope.categorys = resp.data;
-				console.log(resp)
-			})
+			$scope.page.changed();
 		}
 
 		$scope.openAddModal = function () {
@@ -33,7 +45,10 @@ define(function (require) {
 		      		return null;
 		      	},
 		        categorys: function(){
-		        	return $scope.categorys;
+		        		return $scope.categorys;
+		        },
+		        mainInit: function(){
+		        		return $scope.init;
 		        }
 		      }
 		    });
@@ -48,12 +63,15 @@ define(function (require) {
 		      		return index;
 		      	},
 		        categorys: function(){
-	        		return $scope.categorys;
+	        			return $scope.categorys;
+		        },
+		        mainInit: function(){
+		        		return $scope.init;
 		        }
 		      }
 		    });
 		}
-		//TODO 实际删除+页面删除
+		
 		$scope.delete = function(index){
 			var category = $scope.categorys[index];
 			Proxy.category.del(category, function success(resp){
@@ -63,7 +81,7 @@ define(function (require) {
 		}
 		$scope.init();
 
-    }]).controller('categoryModalController',function ($uibModalInstance, $scope, index, categorys, uuid2, Proxy) {
+    }]).controller('categoryModalController',function ($uibModalInstance, $scope, index, categorys, uuid2, Proxy, mainInit) {
     	
 		$scope.category = {
          	id: '',//类别id
@@ -79,14 +97,12 @@ define(function (require) {
 		$scope.add = function(){
 			if(index != null){
 				Proxy.category.update($scope.category,function success(resp){
-					categorys[index].name = $scope.category.name;
+					mainInit()
 				})
 			}else{
 				$scope.category.id = uuid2.newuuid();
-				console.log(typeof($scope.category.id))
-				console.log($scope.category)
 				Proxy.category.add($scope.category, function success(resp){
-					categorys.push($scope.category);
+					mainInit();
 				})
 			}
 			$uibModalInstance.close();

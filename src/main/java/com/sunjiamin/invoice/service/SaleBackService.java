@@ -3,6 +3,8 @@ package com.sunjiamin.invoice.service;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.sunjiamin.invoice.model.Good;
 import com.sunjiamin.invoice.model.SaleBack;
@@ -32,6 +34,17 @@ public class SaleBackService {
 
 	public List<ShowSaleBack> getAll() {
 		List<SaleBack> list = _saleBackRepository.findAll();
+		List<ShowSaleBack> showSales = new ArrayList<ShowSaleBack>();
+		for (SaleBack saleBack : list) {
+			showSales.add(convertToShowSaleBack(saleBack));
+		}
+		return showSales;
+	}
+
+	@Deprecated
+	public List<ShowSaleBack> getByPage(int page, int limit) {
+		Pageable pageable = new PageRequest(page - 1, limit);
+		List<SaleBack> list = _saleBackRepository.findAll(pageable).getContent();
 		List<ShowSaleBack> showSales = new ArrayList<ShowSaleBack>();
 		for (SaleBack saleBack : list) {
 			showSales.add(convertToShowSaleBack(saleBack));

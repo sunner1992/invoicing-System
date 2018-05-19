@@ -26,6 +26,8 @@ public class Sale implements Serializable {
 	private int count;
 	@Column(name = "time")
 	private Date time;
+	@Column(name = "price")
+	private Double price;
 
 	public int getId() {
 		return id;
@@ -66,5 +68,15 @@ public class Sale implements Serializable {
 	public void setTime(Date time) {
 		this.time = time;
 	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	
+	
 
 }

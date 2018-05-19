@@ -1,14 +1,22 @@
 package com.sunjiamin.invoice.rs;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.sunjiamin.invoice.model.Result;
 import com.sunjiamin.invoice.model.SaleBack;
 import com.sunjiamin.invoice.model.ShowSaleBack;
+import com.sunjiamin.invoice.model.User;
 import com.sunjiamin.invoice.repository.SaleBackRepository;
 import com.sunjiamin.invoice.service.SaleBackService;
 import com.sunjiamin.invoice.service.StorageService;
@@ -17,7 +25,6 @@ import com.sunjiamin.invoice.service.StorageService;
 @RequestMapping(value = "/saleBack")
 public class SaleBackRS {
 
-	// 本部分依旧缺少对于库存的操作
 	@Autowired
 	private SaleBackService _saleBackService;
 
@@ -53,4 +60,12 @@ public class SaleBackRS {
 		return new Result<List<ShowSaleBack>>(200, "获取全部退货信息成功", list);
 	}
 
+	@Deprecated
+	@RequestMapping(value = "/getByPage", method = RequestMethod.GET)
+	public Result<Map<String, Object>> getByPage(@RequestParam int page, @RequestParam int limit) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("items", _saleBackService.getByPage(page, limit));
+		map.put("totalCount", _saleBackRepository.count());
+		return new Result<Map<String, Object>>(200, "分页查询成功", map);
+	}
 }

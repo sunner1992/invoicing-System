@@ -14,7 +14,7 @@ define(function (require) {
 
 		$scope.page = {
 			totalCount: 0,
-			limit: 2,
+			limit: 10,
 			currentPage: 1,
 			pageChanged:function(){
 				var param = {
@@ -44,7 +44,10 @@ define(function (require) {
 		      		return null;
 		      	},
 		        users: function(){
-		        	return $scope.users;
+		        		return $scope.users;
+		        },
+		        mainInit: function(){
+		        		return $scope.mainInit;
 		        }
 		      }
 		    });
@@ -65,6 +68,9 @@ define(function (require) {
 		      	},
 		        users: function(){
 		        		return $scope.users;
+		        },
+		        mainInit: function(){
+		        		return $scope.mainInit;
 		        }
 		      }
 		    });
@@ -78,9 +84,9 @@ define(function (require) {
 		}
 		$scope.init();
 
-    }]).controller('userModalController',function ($uibModalInstance, $scope, index, users, Proxy) {
+    }]).controller('userModalController',function ($uibModalInstance, $scope, index, users, Proxy, mainInit) {
     	
-    	//TODO 我增加了一个用户名,username为主键，id不要了，应为username唯一
+    		//我增加了一个用户名,username为主键，id不要了，应为username唯一
 		$scope.user = {
 			name: '',
 			role: '',
@@ -93,7 +99,6 @@ define(function (require) {
 			password: ''
 		};
 	
-        //TODO 要查出来
         $scope.roles = [];
 	
 		var initRoles = function(){
@@ -110,21 +115,13 @@ define(function (require) {
 	
 		$scope.add = function(){
 			if(index != null){
-				users[index].name = $scope.user.name;
-				users[index].role = $scope.user.role;
-				users[index].phoneNum = $scope.user.phoneNum;
-				users[index].address = $scope.user.address;
-				users[index].gender = $scope.user.gender;
-				users[index].username = $scope.user.username;
-				users[index].password = $scope.user.password;
 				Proxy.user.update({username:users[index].username}, $scope.user, function success(resp){
-					console.log(resp)
+					mainInit();
 				})
 			}else{
 				$scope.user.createTime = new Date();
 				Proxy.user.add($scope.user, function success(resp){
-					console.log(resp);
-					users.push($scope.user);
+					mainInit();
 				})
 			}
 			$uibModalInstance.close();

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sunjiamin.invoice.model.Good;
@@ -29,6 +31,17 @@ public class PurchaseBackService {
 
 	public List<ShowPurchaseBack> getAll() {
 		List<PurchaseBack> purchaseBacks = _purchaseBackRepository.findAll();
+		List<ShowPurchaseBack> result = new ArrayList<ShowPurchaseBack>();
+		for (PurchaseBack purchaseBack : purchaseBacks) {
+			result.add(convertToShow(purchaseBack));
+		}
+		return result;
+	}
+
+	@Deprecated
+	public List<ShowPurchaseBack> getByPage(int page, int limit) {
+		Pageable pageable = new PageRequest(page - 1, limit);
+		List<PurchaseBack> purchaseBacks = _purchaseBackRepository.findAll(pageable).getContent();
 		List<ShowPurchaseBack> result = new ArrayList<ShowPurchaseBack>();
 		for (PurchaseBack purchaseBack : purchaseBacks) {
 			result.add(convertToShow(purchaseBack));

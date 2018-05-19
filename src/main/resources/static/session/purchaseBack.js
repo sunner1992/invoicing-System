@@ -17,12 +17,25 @@ define(function (require) {
 		$css.bind('session/purchaseBack.css', $scope);
 		
 		$scope.purchaseBacks = [];
+		
+		$scope.page = {
+				totalCount: 0,
+				currentPage: 1,
+				limit: 10,
+				changed: function(){
+					var param = {
+						page: this.currentPage,
+						limit: this.limit
+					}
+					Proxy.purchaseBack.getByPage(param, function success(resp){
+						$scope.purchaseBacks = resp.data.items;
+						$scope.page.totalCount = resp.data.totalCount;
+					})
+				}
+			}
 
 		$scope.init = function(){
-			//已有用户的查询
-			Proxy.purchaseBack.getAll(function success(resp){
-				$scope.purchaseBacks = resp.data;
-			})
+			$scope.page.changed();
 		}
 
 		//打开添加角色页面
@@ -35,10 +48,10 @@ define(function (require) {
 		      		return null;
 		      	},
 		        purchaseBacks: function(){
-		        	return $scope.purchaseBacks;
+		        		return $scope.purchaseBacks;
 		        },
 		        mainInit: function(){
-		        	return $scope.init;
+		        		return $scope.init;
 		        }
 		      }
 		    });
@@ -57,7 +70,7 @@ define(function (require) {
 		        		return $scope.purchaseBacks;
 		        },
 		        mainInit: function(){
-		        	return $scope.init;
+		        		return $scope.init;
 		        }
 		      }
 		    });

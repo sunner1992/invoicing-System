@@ -1,33 +1,48 @@
 define(function (require) {
     var app = require('../app');
 
-    // dynamic load services here or add into dependencies of ui-router state config
+    // dynamic load services here or add into dependencies of ui-router state
+	// config
     // require('../services/usersService');
 
     app.controller('goodController', ['$scope', '$ngConfirm', '$css', '$uibModal', 'Proxy', 'uuid2', function ($scope, $ngConfirm, $css, $uibModal, Proxy, uuid2) {
         
-        //商品
-  //       $scope.good = {
-  // 			id: '',//商品id
-		// 	name: '',//商品名称
-		// 	creater: '',//生产商
-		// 	category: '',//类别
-		// 	categoryId: '',//商品id
-		// 	provider: '',//供应商
-		// 	providerId: ''//供应商id
+        // 商品
+  // $scope.good = {
+  // id: '',//商品id
+		// name: '',//商品名称
+		// creater: '',//生产商
+		// category: '',//类别
+		// categoryId: '',//商品id
+		// provider: '',//供应商
+		// providerId: ''//供应商id
 		// };
 
 		$css.bind('session/good.css', $scope);
 		
 		$scope.goods = [];
+		
+		$scope.page = {
+				totalCount: 0,
+				currentPage: 1,
+				limit: 10,
+				changed: function(){
+					var param = {
+						page: this.currentPage,
+						limit: this.limit
+					}
+					Proxy.good.getByPage(param, function success(resp){
+						$scope.goods = resp.data.items;
+						$scope.page.totalCount = resp.data.totalCount;
+					})
+				}
+			}
 
 		$scope.init = function(){
-			Proxy.good.getAll(function success(resp){
-				$scope.goods = resp.data;
-			})
+			$scope.page.changed();
 		}
 
-		//打开添加角色页面
+		// 打开添加角色页面
 		$scope.openAddModal = function () {
 		    var modalInstance = $uibModal.open({
 		        templateUrl: 'session/templates/goodModal.html',
@@ -37,7 +52,10 @@ define(function (require) {
 		      		return null;
 		      	},
 		        goods: function(){
-		        	return $scope.goods;
+		        		return $scope.goods;
+		        },
+		        mainInit: function(){
+		        		return $scope.init;
 		        }
 		      }
 		    });
@@ -53,11 +71,14 @@ define(function (require) {
 		      	},
 		        goods: function(){
 		        		return $scope.goods;
+		        },
+		        mainInit: function(){
+		        		return $scope.init;
 		        }
 		      }
 		    });
 		}
-		//TODO 实际删除+页面删除
+		
 		$scope.delete = function(index){
 			var good = $scope.goods[index];
 			Proxy.good.del(good,function success(resp){
@@ -66,22 +87,22 @@ define(function (require) {
 		}
 		$scope.init();
 
-    }]).controller('goodModalController',function ($uibModalInstance, $scope, index, goods, Proxy, uuid2) {
+    }]).controller('goodModalController',function ($uibModalInstance, $scope, index, goods, Proxy, uuid2, mainInit) {
     	
 		$scope.good = {
-  			id: '',//商品id
-			name: '',//商品名称
-			creater: '',//生产商
-			category: '',//类别
-			categoryId: '',//商品id
-			provider: '',//供应商
-			providerId: ''//供应商id
+  			id: '',// 商品id
+			name: '',// 商品名称
+			creater: '',// 生产商
+			category: '',// 类别
+			categoryId: '',// 商品id
+			provider: '',// 供应商
+			providerId: ''// 供应商id
 		};
 
 		$scope.categorys = [];
 		$scope.providers = [];
-		//类别应该是选出来的
-		//供应商名字也应该是查出来的
+		// 类别应该是选出来的
+		// 供应商名字也应该是查出来的
 
 		$scope.init = function(){
 			if(index != null){
@@ -99,24 +120,19 @@ define(function (require) {
 				console.log($scope.categorys);
 			})
 		}
-		//修改和添加为两个方法，修改的时候页面只是数据变
+		// 修改和添加为两个方法，修改的时候页面只是数据变
 		$scope.add = function(){
 			updateCategoryId();
 			updateProviderId();
 
 			if(index != null){
 				Proxy.good.update($scope.good,function success(resp){
-					goods[index].name = $scope.good.name;
-					goods[index].creater = $scope.good.creater;
-					goods[index].category = $scope.good.category;
-					goods[index].categoryId = $scope.good.categoryId;
-					goods[index].provider = $scope.good.provider;
-					goods[index].providerId = $scope.good.providerId;
+					mainInit();
 				})
 			}else{
 				$scope.good.id = uuid2.newuuid();
 				Proxy.good.add($scope.good, function success(resp){
-					goods.push($scope.good);
+					mainInit();
 				})
 			}
 			$uibModalInstance.close();

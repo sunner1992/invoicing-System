@@ -26,13 +26,25 @@ define(function (require) {
 		$css.bind('session/purchaseGoods.css', $scope);
 		
 		$scope.purchases = [];
+		
+		$scope.page = {
+				totalCount: 0,
+				currentPage: 1,
+				limit: 10,
+				changed: function(){
+					var param = {
+						page: this.currentPage,
+						limit: this.limit
+					}
+					Proxy.purchase.getByPage(param, function success(resp){
+						$scope.purchases = resp.data.items;
+						$scope.page.totalCount = resp.data.totalCount;
+					})
+				}
+			}
 
 		$scope.init = function(){
-			//已有用户的查询
-			Proxy.purchase.getAll(function success(resp){
-				console.log(resp)
-				$scope.purchases = resp.data;
-			})
+			$scope.page.changed();
 		}
 
 		//打开添加角色页面
@@ -45,10 +57,10 @@ define(function (require) {
 			      		return null;
 			      	},
 			        purchases: function(){
-			        	return $scope.purchases;
+			        		return $scope.purchases;
 			        },
-			        init: function(){
-			        	return $scope.init;
+			        mainInit: function(){
+			        		return $scope.init;
 			        }
 			    }
 		    });
@@ -60,14 +72,13 @@ define(function (require) {
 		     	controller: 'purchaseGoodsModalController',
 		      	resolve: {
 			      	index: function(){
-	                    //TODO 
 			      		return index;
 			      	},
 			        purchases: function(){
-		        		return $scope.purchases;
+		        			return $scope.purchases;
 			        },
-			        init: function(){
-			        	return $scope.init;
+			        mainInit: function(){
+			        		return $scope.init;
 			        }
 			    }
 		    });
@@ -83,7 +94,7 @@ define(function (require) {
 		}
 		$scope.init();
 
-    }]).controller('purchaseGoodsModalController',function ($uibModalInstance, $scope, index, purchases, Proxy, init, $rootScope) {
+    }]).controller('purchaseGoodsModalController',function ($uibModalInstance, $scope, index, purchases, Proxy, mainInit, $rootScope) {
     	
 		$scope.purchase = {
 			goodId: '',//商品id
@@ -103,7 +114,6 @@ define(function (require) {
 				$scope.purchase.count = purchases[index].count;
 				$scope.purchase.time = purchases[index].time;
 				$scope.purchase.buyerId = $rootScope.session.username;
-				// $scope.purchase.buyerId = 'luliling';
 			}
 		}
 		//修改和添加为两个方法，修改的时候页面只是数据变
@@ -111,16 +121,13 @@ define(function (require) {
 			$scope.purchase.totalPrice = $scope.purchase.price * $scope.purchase.count;
 			if(index != null){
 				Proxy.purchase.update($scope.purchase,function success(resp){
-					purchases[index].price = $scope.purchase.price;
-					purchases[index].count = $scope.purchase.count;
-					init()
+					mainInit()
 				})
 			}else{
 				$scope.purchase.time = new Date();
 				$scope.purchase.buyerId = $rootScope.session.username;
 				Proxy.purchase.add($scope.purchase,function success(resp){
-					purchases.push($scope.purchase);
-					init()
+					mainInit()
 				})
 			}
 			$uibModalInstance.close();

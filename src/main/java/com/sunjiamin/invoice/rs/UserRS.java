@@ -80,7 +80,7 @@ public class UserRS {
 	@Deprecated
 	@RequestMapping(value = "/getByPage", method = RequestMethod.GET)
 	public Result<Map<String, Object>> getByPage(@RequestParam int page, @RequestParam int limit) {
-		Pageable pageable = new PageRequest(page, limit);
+		Pageable pageable = new PageRequest(page - 1, limit);
 		Page<User> users = _userRepository.findAll(pageable);
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<User> us = users.getContent();

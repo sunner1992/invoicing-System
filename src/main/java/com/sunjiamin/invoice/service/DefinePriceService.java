@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.sunjiamin.invoice.model.DefinePrice;
@@ -26,6 +28,17 @@ public class DefinePriceService {
 
 	public List<ShowDefinePrice> getAll() {
 		List<DefinePrice> list = _definePriceRepository.findAll();
+		List<ShowDefinePrice> showDefinePrices = new ArrayList<ShowDefinePrice>();
+		for (DefinePrice definePrice : list) {
+			showDefinePrices.add(convertToShowDefinePrice(definePrice));
+		}
+		return showDefinePrices;
+	}
+	
+	@Deprecated
+	public List<ShowDefinePrice> getByPage(int page, int limit) {
+		Pageable pageable = new PageRequest(page - 1, limit);
+		List<DefinePrice> list = _definePriceRepository.findAll(pageable).getContent();
 		List<ShowDefinePrice> showDefinePrices = new ArrayList<ShowDefinePrice>();
 		for (DefinePrice definePrice : list) {
 			showDefinePrices.add(convertToShowDefinePrice(definePrice));

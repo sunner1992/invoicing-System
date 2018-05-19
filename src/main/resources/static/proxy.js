@@ -67,6 +67,12 @@ define(function (require) {
     			},
     			'get': {
     				method: 'GET',
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
+    				}
     			}
     		}),
     		good: $resource('./good/:action', {}, {
@@ -83,6 +89,12 @@ define(function (require) {
     				method: 'GET',
     				params: {
     					action: 'getAll'
+    				}
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
     				}
     			}
     		}),
@@ -101,6 +113,12 @@ define(function (require) {
     				params: {
     					action: 'getAll'
     				}
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
+    				}
     			}
     		}),
     		purchase: $resource('./purchase/:action', {}, {
@@ -115,6 +133,12 @@ define(function (require) {
     				params: {
     					action: 'getAll'
     				}
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
+    				}
     			}
     		}),
     		purchaseBack: $resource('./purchaseBack/:action', {}, {
@@ -128,6 +152,12 @@ define(function (require) {
     				method: 'GET',
     				params: {
     					action: 'getAll'
+    				}
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
     				}
     			}
     		}),
@@ -146,6 +176,12 @@ define(function (require) {
     				params: {
     					action: 'getAll'
     				}
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
+    				}
     			}
     		}),
     		sale: $resource('./sale/:action', {}, {
@@ -159,6 +195,12 @@ define(function (require) {
     				method: 'GET',
     				params: {
     					action: 'getAll'
+    				}
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
     				}
     			}
     		}),
@@ -174,6 +216,12 @@ define(function (require) {
     				params: {
     					action: 'getAll'
     				}
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
+    				}
     			}
     		}),
     		storage: $resource('./storage/:action', {}, {
@@ -181,6 +229,12 @@ define(function (require) {
     				method: 'GET',
     				params: {
     					action: 'getAll'
+    				}
+    			},
+    			'getByPage': {
+    				method: 'GET',
+    				params: {
+    					action: 'getByPage'
     				}
     			}
     		}),

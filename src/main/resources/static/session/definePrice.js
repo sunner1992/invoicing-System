@@ -23,13 +23,25 @@ define(function (require) {
 		$css.bind('session/definePrice.css', $scope);
 		
 		$scope.showDefines = [];
+		
+		$scope.page = {
+				totalCount: 0,
+				currentPage: 1,
+				limit: 10,
+				changed: function(){
+					var param = {
+						page: this.currentPage,
+						limit: this.limit
+					}
+					Proxy.definePrice.getByPage(param, function success(resp){
+						$scope.showDefines = resp.data.items;
+						$scope.page.totalCount = resp.data.totalCount;
+					})
+				}
+			}
 
 		$scope.init = function(){
-			//已有用户的查询
-			Proxy.definePrice.getAll(function success(resp){
-				console.log(resp)
-				$scope.showDefines = resp.data;
-			})
+			$scope.page.changed();
 		}
 
 		//打开添加角色页面
@@ -42,10 +54,10 @@ define(function (require) {
 			      		return null;
 			      	},
 			        showDefines: function(){
-			        	return $scope.showDefines;
+			        		return $scope.showDefines;
 			        },
 			        mainInit: function(){
-			        	return $scope.init;
+			        		return $scope.init;
 			        }
 			    }
 		    });
@@ -57,14 +69,13 @@ define(function (require) {
 		     	controller: 'definePriceModalController',
 		      	resolve: {
 			      	index: function(){
-	                    //TODO 
 			      		return index;
 			      	},
 			        showDefines: function(){
-		        		return $scope.showDefines;
+		        			return $scope.showDefines;
 			        },
 			        mainInit: function(){
-			        	return $scope.init;
+			        		return $scope.init;
 			        }
 			    }
 		    });
@@ -82,8 +93,8 @@ define(function (require) {
     }]).controller('definePriceModalController',function ($uibModalInstance, $scope, index, showDefines, Proxy, mainInit) {
     	
 		$scope.define = {
-        	goodId: '',
-        	salePrice: 0
+	        	goodId: '',
+	        	salePrice: 0
         }
 
         $scope.isModify = false;
@@ -98,7 +109,6 @@ define(function (require) {
 		}
 		
 		$scope.add = function(){
-			//TODO 一个查的操作，以免goodid填错，确定id对应了货物
 			if(index != null){
 				Proxy.definePrice.update($scope.define,function success(resp){
 					mainInit()

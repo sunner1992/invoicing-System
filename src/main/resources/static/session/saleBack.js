@@ -27,13 +27,25 @@ define(function (require) {
 		$css.bind('session/saleBack.css', $scope);
 		
 		$scope.sales = [];
+		
+		$scope.page = {
+				totalCount: 0,
+				currentPage: 1,
+				limit: 10,
+				changed: function(){
+					var param = {
+						page: this.currentPage,
+						limit: this.limit
+					}
+					Proxy.saleBack.getByPage(param, function success(resp){
+						$scope.sales = resp.data.items;
+						$scope.page.totalCount = resp.data.totalCount;
+					})
+				}
+			}
 
 		$scope.init = function(){
-			//已有用户的查询
-			Proxy.saleBack.getAll(function success(resp){
-				console.log(resp)
-				$scope.sales = resp.data;
-			})
+			$scope.page.changed();
 		}
 
 		//打开添加角色页面
@@ -46,10 +58,10 @@ define(function (require) {
 			      		return null;
 			      	},
 			        sales: function(){
-			        	return $scope.sales;
+			        		return $scope.sales;
 			        },
 			        init: function(){
-			        	return $scope.init;
+			        		return $scope.init;
 			        }
 			    }
 		    });
@@ -64,10 +76,10 @@ define(function (require) {
 			      		return index;
 			      	},
 			        sales: function(){
-		        		return $scope.sales;
+		        			return $scope.sales;
 			        },
 			        init: function(){
-			        	return $scope.init;
+			        		return $scope.init;
 			        }
 			    }
 		    });

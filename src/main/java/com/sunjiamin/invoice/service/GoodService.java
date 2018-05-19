@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.sunjiamin.invoice.model.Good;
 import com.sunjiamin.invoice.model.ShowGood;
@@ -46,6 +48,20 @@ public class GoodService {
 
 	public List<ShowGood> getAll() {
 		List<Good> goods = _goodRepository.findAll();
+		List<ShowGood> showGoods = new ArrayList<ShowGood>();
+		for (Good good : goods) {
+			//更新category和provider
+			String provider = _providerRepository.findById(good.getProviderId()).get().getContact();
+			String category = _categoryRepository.findById(good.getCategoryId()).get().getName();
+			showGoods.add(convertGoodToShowGood(good, category, provider));
+		}
+		return showGoods;
+	}
+	
+	@Deprecated
+	public List<ShowGood> getByPage(int page, int limit){
+		Pageable pageable = new PageRequest(page - 1, limit);
+		List<Good> goods = _goodRepository.findAll(pageable).getContent();
 		List<ShowGood> showGoods = new ArrayList<ShowGood>();
 		for (Good good : goods) {
 			//更新category和provider

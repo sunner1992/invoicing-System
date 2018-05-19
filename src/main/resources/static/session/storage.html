@@ -14,17 +14,17 @@
 	 				</tr>
 	 			</thead>
 	 			<tbody class="scrollTbody">
-	 				<tr data-ng-repeat="purchase in purchases" style="display: flex;min-height: 40px">
-	 					<td style="min-width: 300px;text-align: center;">{{purchase.goodId}}</td>
-	 					<td style="min-width: 200px;text-align: center;">{{purchase.goodName}}</td>
-	 					<td style="min-width: 200px;text-align: center;">{{purchase.category}}</td>
-	 					<td style="min-width: 200px;text-align: center;">{{purchase.provider}}</td>
-	 					<td style="min-width: 200px;text-align: center;">{{purchase.count}}</td>
+	 				<tr data-ng-repeat="storage in storages" style="display: flex;min-height: 40px">
+	 					<td style="min-width: 300px;text-align: center;">{{storage.goodId}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{storage.goodName}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{storage.category}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{storage.provider}}</td>
+	 					<td style="min-width: 200px;text-align: center;">{{storage.count}}</td>
 	 				</tr>
 	 			</tbody>
 			</table>
 		<div class="table-footer">
-			<ul uib-pagination boundary-links="true" total-items="users" ng-model="currentPage" class="pagination-sm" previous-text="上一页" next-text="下一页" first-text="首页" last-text="尾页"></ul>
+			<ul uib-pagination boundary-links="true" ng-change="page.changed()" total-items="page.totalCount" ng-model="page.currentPage" class="pagination-sm" previous-text="上一页" next-text="下一页" first-text="首页" last-text="尾页"></ul>
 		</div>
 	</div>
 </div>
