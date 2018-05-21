@@ -34,7 +34,7 @@
 .scrollTbody{
     display: flex;
     flex-direction: column;
-    overflow: auto;
+   /*  overflow: auto; */
     width: 100%;
 }
 /*.scrollTbody td{

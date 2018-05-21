@@ -4,16 +4,16 @@
 	</div>
 	<div class="table-content">
 		<!-- <div style="position: relative;width: 100%;height: 100%;"> -->
-			<table class="table table-bordered table-hover" style="display: flex;width: 100%;flex-direction: column;max-height: 90%;">
+			<table class="table table-bordered table-hover" style="display: flex;width: 100%;flex-direction: column;max-height: 90%;overflow-x: scroll;">
 	 			<thead class="fixedThead" style="width: 100%;height: 40px;">
-	 				<tr style="display: flex;flex-grow: 1">
+	 				<tr style="display: flex;flex-grow: 1;background-color: rgb(255, 255, 255);">
 	 					<th style="min-width: 300px; text-align: center;">公司编号</th>
 	 					<th style="min-width: 100px;text-align: center;">操作</th>
 	 					<th style="min-width: 100px;text-align: center;">联系人</th>
 	 					<th style="min-width: 150px;text-align: center;">联系电话</th>
 	 					<th style="min-width: 150px;text-align: center;">公司电话</th>
 	 					<th style="min-width: 250px;text-align: center;">公司名称</th>
-		 				<th style="flex-grow: 1;text-align: center;">公司地址</th>
+		 				<th style="min-width: 300px; text-align: center;">公司地址</th>
 	 				</tr>
 	 			</thead>
 	 			<tbody class="scrollTbody">
@@ -24,7 +24,7 @@
 	 					<td style="min-width: 150px;text-align: center;">{{provider.phoneNum}}</td>
 	 					<td style="min-width: 150px;text-align: center;">{{provider.companyPhone}}</td>
 	 					<td style="min-width: 250px;text-align: center;">{{provider.company}}</td>
-	 					<td style="flex-grow: 1;text-align: center;">{{provider.address}}</td>
+	 					<td style="min-width: 300px;text-align: center;">{{provider.address}}</td>
 	 				</tr>
 	 			</tbody>
 			</table>

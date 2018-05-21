@@ -4,15 +4,15 @@
 	</div>
 	<div class="table-content">
 		<!-- <div style="position: relative;width: 100%;height: 100%;"> -->
-			<table class="table table-bordered table-hover" style="display: flex;width: 100%;flex-direction: column;max-height: 90%;">
+			<table class="table table-bordered table-hover" style="display: flex;width: 100%;flex-direction: column;max-height: 90%;overflow-x: scroll;">
 	 			<thead class="fixedThead" style="width: 100%;height: 40px;">
-	 				<tr style="display: flex;flex-grow: 1">
+	 				<tr style="display: flex;flex-grow: 1;background-color: rgb(255, 255, 255);">
 	 					<th style="min-width: 300px; text-align: center;">商品ID</th>
 	 					<th style="min-width: 100px;text-align: center;">操作</th>
 	 					<th style="min-width: 200px;text-align: center;">商品名称</th>
 	 					<th style="min-width: 150px;text-align: center;">类别</th>
 	 					<th style="min-width: 300px;text-align: center;">生产商</th>
-		 				<th style="flex-grow: 1;text-align: center;">供货商</th>
+		 				<th style="min-width: 300px;text-align: center;">供货商</th>
 	 				</tr>
 	 			</thead>
 	 			<tbody class="scrollTbody">
@@ -22,7 +22,7 @@
 	 					<td style="min-width: 200px;text-align: center;">{{good.name}}</td>
 	 					<td style="min-width: 150px;text-align: center;">{{good.category}}</td>
 	 					<td style="min-width: 300px;text-align: center;">{{good.creater}}</td>
-	 					<td style="flex-grow: 1;text-align: center;">{{good.provider}}</td>
+	 					<td style="min-width: 300px;text-align: center;">{{good.provider}}</td>
 	 				</tr>
 	 			</tbody>
 			</table>
