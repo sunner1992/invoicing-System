@@ -70,7 +70,7 @@ define(function (require) {
 		        		return $scope.providers;
 		        },
 		        mainInit: function(){
-		        		return $scope.init();
+		        		return $scope.init;
 		        }
 		      }
 		    });

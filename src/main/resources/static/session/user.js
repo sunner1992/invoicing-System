@@ -47,7 +47,7 @@ define(function (require) {
 		        		return $scope.users;
 		        },
 		        mainInit: function(){
-		        		return $scope.mainInit;
+		        		return $scope.init;
 		        }
 		      }
 		    });
@@ -70,7 +70,7 @@ define(function (require) {
 		        		return $scope.users;
 		        },
 		        mainInit: function(){
-		        		return $scope.mainInit;
+		        		return $scope.init;
 		        }
 		      }
 		    });
